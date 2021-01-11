@@ -1,0 +1,15 @@
+﻿.container {
+    max-width: 960px;
+}
+
+.pricing-header {
+    max-width: 700px;
+}
+.myContent{
+    display:flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+}
+    .myContent .col {
+        flex: 0 0 33.333333%;
+    }
