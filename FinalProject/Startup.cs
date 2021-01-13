@@ -1,3 +1,4 @@
+using FinalProject.CloudStorage;
 using FinalProject.Data;
 using FinalProject.Models;
 using Microsoft.AspNetCore.Builder;
@@ -69,7 +70,7 @@ namespace FinalProject
                     facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
                     facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
                 });
-
+            services.AddSingleton<ICloudStorage, GoogleCloudStorage>();
             services.AddControllersWithViews();
             services.AddRazorPages();
         }

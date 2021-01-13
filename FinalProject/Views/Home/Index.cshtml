@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model IEnumerable<FinalProject.Models.Collection>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="utf-8">
@@ -34,86 +35,46 @@
         </div>
 
         <div class="text-center myContent">
-            <div class="col">
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-header">
-                        <h4 class="my-0 fw-normal">Free</h4>
-                    </div>
-                    <div class="card-body">
-                        <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1>
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li>10 users included</li>
-                            <li>2 GB of storage</li>
-                            <li>Email support</li>
-                            <li>Help center access</li>
-                        </ul>
-                        <button type="button" class="w-100 btn btn-lg btn-outline-primary">Sign up for free</button>
+            <form asp-controller="Home" asp-action="Create" method="get">
+                <div class="col">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-header">
+                            <h4 class="my-0 fw-normal">Новая коллекция</h4>
+                        </div>
+                        <div class="card-body">
+                            <h1 class="card-title pricing-card-title">$0 <small class="text-muted">/ mo</small></h1>
+
+                            <button type="submit" class="w-100 btn btn-lg btn-outline-primary">Добавить</button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </form>
+            @foreach (var collection in Model)
+            {
             <div class="col">
                 <div class="card mb-4 shadow-sm">
                     
                     <div class="card-header text-center">
-                        <button type="button" class="close" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <a href="~/Home/Privacy">
-                            <h4 class="my-0 fw-normal">Pro</h4>
+                        <form action="~/Home/Delete" method="post" >
+                            <button type="submit" class="close" aria-label="Close" value="@collection.id" name="id">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </form>
+                        <a href="~/Home/Privacy?@collection.id">
+                            <h4 class="my-0 fw-normal">@collection.name</h4>
                         </a>
 
                     </div>
                     
                     <div class="card-body">
                         <h1 class="card-title pricing-card-title">$15 <small class="text-muted">/ mo</small></h1>
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li>20 users included</li>
-                            <li>10 GB of storage</li>
-                            <li>Priority email support</li>
-                            <li>Help center access</li>
-                        </ul>
-                        <button type="button" class="w-100 btn btn-lg btn-primary">Добавить</button>
+                        <img src="@collection.url" style="width:70px;height:50px;" />
+                        <button type="button" class="w-100 btn btn-lg btn-primary">Список</button>
                     </div>
                 </div>
             </div>
-            <div class="col">
 
-                <div class="card mb-4 shadow-sm">
-                    
-                        <div class="card-header">
-                            <h4 class="my-0 fw-normal">Enterprise</h4>
-                        </div>
-                   
-                    <div class="card-body">
-                        <h1 class="card-title pricing-card-title">$29 <small class="text-muted">/ mo</small></h1>
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li>30 users included</li>
-                            <li>15 GB of storage</li>
-                            <li>Phone and email support</li>
-                            <li>Help center access</li>
-                        </ul>
-                        <button type="button" class="w-100 btn btn-lg btn-primary">Contact us</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card mb-4 shadow-sm">
-                    <div class="card-header">
-                        <h4 class="my-0 fw-normal">Enterprise</h4>
-                    </div>
-                    <div class="card-body">
-                        <h1 class="card-title pricing-card-title">$29 <small class="text-muted">/ mo</small></h1>
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li>30 users included</li>
-                            <li>15 GB of storage</li>
-                            <li>Phone and email support</li>
-                            <li>Help center access</li>
-                        </ul>
-                        <button type="button" class="w-100 btn btn-lg btn-primary">Contact us</button>
-                    </div>
-                </div>
-            </div>
-        
+            }
         </div>
 
         
