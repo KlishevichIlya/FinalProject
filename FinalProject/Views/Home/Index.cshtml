@@ -56,13 +56,15 @@
                     
                     <div class="card-header text-center">
                         <form action="~/Home/Delete" method="post" >
-                            <button type="submit" class="close" aria-label="Close" value="@collection.id" name="id">
+                            <button type="submit" class="close" aria-label="Close" value="@collection.Id" name="id">
                                 <span aria-hidden="true">&times;</span>
                             </button>
-                        </form>
-                        <a href="~/Home/Privacy?@collection.id">
+                        </form>                        
+                        <a href="~/Home/Edit?id=@collection.Id" type="submit" >
                             <h4 class="my-0 fw-normal">@collection.name</h4>
+                                
                         </a>
+                        
 
                     </div>
                     

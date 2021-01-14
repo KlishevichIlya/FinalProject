@@ -49,7 +49,7 @@ namespace FinalProject.Controllers
                 {
                     await UploadFile(collection);
                 }
-                collection.id = Guid.NewGuid().ToString();
+                collection.Id = Guid.NewGuid().ToString();
                 collection.User = await _userManager.GetUserAsync(User);
                 _db.Collections.Add(collection);
                 await _db.SaveChangesAsync();
@@ -59,16 +59,47 @@ namespace FinalProject.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        
+        public async Task<IActionResult> Edit(string id)
         {
-            return View();
+            var item = await _db.Collections.FindAsync(id);
+            if (item != null)
+                return View(item);
+            else
+                return NotFound();
         }
 
         [HttpPost]
-        public IActionResult Delete(string id)
+        public async Task<IActionResult> Update(string id,Collection collection)
         {
-            var item = id;
-            return LocalRedirect("~/Identity/Account/Login");
+            var item = await _db.Collections.FindAsync(id);
+            if (item != null)
+            {
+                item.name = collection.name;
+                item.description = collection.description;
+                if (collection.formFile != null)
+                    item.formFile = collection.formFile;
+                _db.Collections.UpdateRange(item);
+                await _db.SaveChangesAsync();
+                return RedirectToAction("Index", "Home");
+            }
+            return NotFound();
+        }
+
+
+
+            [HttpPost]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var item = await _db.Collections.FindAsync(id);
+            if(item != null)
+            {
+                _db.Collections.Remove(item);
+                await _db.SaveChangesAsync();
+                return RedirectToAction("Index", "Home");
+            }
+
+            return NotFound();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
