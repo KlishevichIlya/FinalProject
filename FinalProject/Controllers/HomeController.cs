@@ -32,7 +32,9 @@ namespace FinalProject.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await _db.Collections.ToListAsync());
+            var currentUser = await _userManager.GetUserAsync(User);
+            var items =  _db.Collections.Where(x => x.User == currentUser );
+            return View(items);
         }
 
         public IActionResult Create()
@@ -78,8 +80,19 @@ namespace FinalProject.Controllers
                 item.name = collection.name;
                 item.description = collection.description;
                 if (collection.formFile != null)
+                {
+                    if(item.ImageStorageName != null)
+                    {
+                        await _cloudStorage.DeleteFileAsync(item.ImageStorageName);
+                    }
+                    await UploadFile(collection);
                     item.formFile = collection.formFile;
-                _db.Collections.UpdateRange(item);
+                    item.url = collection.url;
+                    item.ImageStorageName = collection.ImageStorageName;
+                   
+                }
+                    
+                _db.Collections.Update(item);
                 await _db.SaveChangesAsync();
                 return RedirectToAction("Index", "Home");
             }
