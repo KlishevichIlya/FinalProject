@@ -1,4 +1,6 @@
-﻿document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
+﻿import { Modal } from "../lib/bootstrap/dist/js/bootstrap.bundle";
+
+document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
   const dropZoneElement = inputElement.closest(".drop-zone");
 
   dropZoneElement.addEventListener("click", (e) => {
@@ -66,3 +68,5 @@ function updateThumbnail(dropZoneElement, file) {
     thumbnailElement.style.backgroundImage = null;
   }
 }
+
+

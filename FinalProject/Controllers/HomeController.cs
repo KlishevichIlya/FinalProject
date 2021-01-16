@@ -47,12 +47,16 @@ namespace FinalProject.Controllers
         {
             if (ModelState.IsValid)
             {
+                //var topic = (Topic.Genre)Enum.GetValues(typeof(Topic.Genre)).GetValue(Convert.ToInt32(collection.Topic));
                 if(collection.formFile != null)
                 {
                     await UploadFile(collection);
                 }
-                collection.Id = Guid.NewGuid().ToString();
-                collection.User = await _userManager.GetUserAsync(User);
+                //collection.Id = Guid.NewGuid().ToString();
+                var currentUser = await _userManager.GetUserAsync(User);
+                collection.UserId = currentUser.Id;
+                //collection.Topic = Convert.ToString(topic);
+                collection.Topic = collection.Topic;
                 _db.Collections.Add(collection);
                 await _db.SaveChangesAsync();
                 return RedirectToAction("Index", "Home");
@@ -78,6 +82,9 @@ namespace FinalProject.Controllers
             if (item != null)
             {
                 item.name = collection.name;
+                //var topic = (Topic.Genre)Enum.GetValues(typeof(Topic.Genre)).GetValue(Convert.ToInt32(collection.Topic));
+                //item.Topic = Convert.ToString(topic);
+                item.Topic = collection.Topic;
                 item.description = collection.description;
                 if (collection.formFile != null)
                 {

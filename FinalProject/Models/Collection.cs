@@ -18,8 +18,10 @@ namespace FinalProject.Models
         [NotMapped]
         public IFormFile formFile { get; set; }
         public string ImageStorageName { get; set; }
+        public string UserId { get; set; }
         public User User { get; set; }
-        
+        public string Topic { get; set; }
+             
 
     }
 }
