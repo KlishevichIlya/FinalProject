@@ -1,4 +1,4 @@
-﻿import { Modal } from "../lib/bootstrap/dist/js/bootstrap.bundle";
+﻿//import { Modal } from "../lib/bootstrap/dist/js/bootstrap.bundle";
 
 document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
   const dropZoneElement = inputElement.closest(".drop-zone");

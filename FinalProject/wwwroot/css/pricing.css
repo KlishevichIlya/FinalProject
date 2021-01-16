@@ -1,4 +1,10 @@
-﻿.container {
+﻿html,
+body {
+    height: 100%;
+    width: auto;
+}
+
+.container {
     max-width: 960px;
 }
 

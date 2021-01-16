@@ -1,4 +1,24 @@
-﻿.drop-zone {
+﻿.form-border{
+    padding:35px;
+    border: 2px solid black;
+    border-radius:10px;
+    margin-top:45px;
+}
+.nubex1 {
+    font-weight: bold;
+    
+}
+.marg {
+    margin-bottom: 50px;
+}
+.but{
+    display:flex;
+    justify-content:center;
+    margin-left:auto;
+    margin-bottom:15px;
+}
+
+.drop-zone {
     max-width: 200px;
     height: 200px;
     padding: 25px;
