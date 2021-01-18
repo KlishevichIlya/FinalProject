@@ -2,6 +2,7 @@
 using FinalProject.Data;
 using FinalProject.Models;
 using FinalProject.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -39,8 +40,17 @@ namespace FinalProject.Controllers
 
         public IActionResult Create()
         {
+            
             return View();
         }
+     
+
+    public IActionResult Privacy()
+        {
+            return View();
+        }
+
+    
 
         [HttpPost]
         public async Task<IActionResult> Create(Collection collection)

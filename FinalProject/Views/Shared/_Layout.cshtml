@@ -4,10 +4,28 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - FinalProject</title>
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/navbars/">
+
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    @{
+        var cookieValue = Context.Request.Cookies["theme"];
+    }
+    @if (cookieValue == "false")
+    {
+        <link rel="stylesheet" href="~/css/site.css" />
+    }
+    @if (cookieValue == "true")
+    {
+        <link rel="stylesheet" href="~/css/site2.css" />
+    }
+        <link rel="stylesheet" href="~/css/theme.css" />
+    </head>
+
     
-    <link rel="stylesheet" href="~/css/site.css" />
-</head>
+
+
+
+  
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -29,15 +47,58 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Администрирование</a>
                             </li>
                         }
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Настройки</a>
 
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                            <div class="dropdown-menu" aria-labelledby="dropdown01">
+                                <a data-toggle="modal" data-target="#exampleModal" class="dropdown-item">Тема</a>
+
+                            </div>
+                        </li>                        
                     </ul>
+
                 </div>
             </div>
         </nav>
     </header>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="#exampleModalLabel"> Modal Title</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="height:150px;">
+                    <div class="center">
+                        @if (Context.Request.Cookies["theme"] == "false")
+                        {
+                            <input id="selectTheme" type="checkbox" name="" />
+                        }
+                        @if (Context.Request.Cookies["theme"] == "true")
+                        {
+                            <input id="selectTheme" type="checkbox" checked name="" />
+                        }
+                        @if (Context.Request.Cookies["theme"] == null) { 
+                            <input id="selectTheme" type="checkbox"  name="" />
+                        }   
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                    <form action="~/Home/Index">
+                        <button type="submit" class="btn btn-primary">Применить</button>
+                    </form>
+                    
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -49,9 +110,15 @@
             &copy; 2021 - FinalProject - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <link rel="stylesheet" href="css/bootstrap.css" />
+
+    <script src="~/js/site.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
+
+
