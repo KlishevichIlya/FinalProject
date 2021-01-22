@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    
+
     <form class="form-border" asp-action="Create" asp-controller="Home" enctype="multipart/form-data">
         <h3 class="display-4" style="text-align:center; margin-bottom:55px;">Создание коллекции</h3>
         <div asp-validation-summary="All" class="text-danger"></div>
@@ -29,14 +29,15 @@
         </div>
 
         @*<div class="form-group">
-        <label asp-for="formFile" class="control-label"></label>
-        <input type="file" asp-for="formFile" class="form-control" />
-        <span asp-validation-for="formFile" class="text-danger"></span>
-        </div>*@
+            <label asp-for="formFile" class="control-label"></label>
+            <input type="file" asp-for="formFile" class="form-control" />
+            <span asp-validation-for="formFile" class="text-danger"></span>
+            </div>*@
         <div class="drop-zone marg">
             <span class="drop-zone__prompt">Drop file here or click to upload (.jpg, .png, .gif, .jpeg)</span>
             <input type="file" asp-for="formFile" class="drop-zone__input" />
         </div>
+        
 
 
         <div class="form-group">

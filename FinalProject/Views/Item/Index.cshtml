@@ -1,0 +1,92 @@
+﻿@model IEnumerable<FinalProject.Models.Item>
+@{
+    ViewBag.Title = "Список элементов";
+}
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+
+
+    <link rel="stylesheet" href="~/css/userList.css" />
+</head>
+
+<body>
+    <h1 class="text-center">Все элементы</h1>
+
+    <a data-toggle="modal" data-target="#exampleModal2" class="btn btn-info btn-sm" id="addButton">
+        Добавить поле
+    </a>
+    <div>
+        <a href="~/Item/Create?id=@ViewBag.Id" class="btn btn-sm btn-outline-success">
+            Добавить элемент
+        </a>
+    </div>
+   
+
+
+
+    <table class="table table-striped table-bordered">
+        <tr>
+            <th>Id</th>
+            <th>Имя</th>
+            <th>Теги</th>
+            <th>Действия</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td>@item.Tags</td>
+                
+                <td>
+                    @*<form asp-action="Delete" asp-route-id="@user.Id" method="post">
+                            <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@user.Id">Изменить</a>
+                            <a class="btn btn-sm btn-info" asp-action="ChangePassword" asp-route-id="@user.Id">Сменить пароль</a>
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                Удалить
+                            </button>
+                        </form>*@
+                </td>
+            </tr>
+        }
+    </table>
+    <script src="~/js//userList.js"></script>
+
+
+
+
+
+    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModal2" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="#exampleModalLabel">Добавление нового поля</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="height:200px;">
+                    <div>
+                        <label class="control-label">Тип поля</label>
+                        <select asp-items="Html.GetEnumSelectList<FinalProject.Models.Field.CustomField>()" class="form-control"> </select>
+                        <label class="control-label">Название поля</label>
+                        <input type="text" placeholder="Название..." class="form-control" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                    <form action="~/Home/Index">
+                        <button type="submit" class="btn btn-primary">Применить</button>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

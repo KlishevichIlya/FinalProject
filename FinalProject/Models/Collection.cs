@@ -26,6 +26,6 @@ namespace FinalProject.Models
         public User User { get; set; }
         public string Topic { get; set; }
              
-
+        public List<Item> Items { get; set; }
     }
 }
