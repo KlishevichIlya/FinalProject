@@ -1,0 +1,35 @@
+﻿@model FinalProject.Models.Item
+@{
+    ViewBag.Title = "Добавление элемента";
+
+}
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <script src="https://unpkg.com/@@yaireo/tagify"></script>
+    <script src="https://unpkg.com/@@yaireo/tagify@3.1.0/dist/tagify.polyfills.min.js"></script>
+    <link href="https://unpkg.com/@@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="~/css/createItem.css" />
+</head>
+<body>
+    <h1 class="text-center">@Model.Name</h1>
+    
+        <h3>Теги текущего элемента:</h3>       
+        @foreach (var t in ViewBag.TagForOpen)
+        {
+            <tag title="@t.TagName" contenteditable="false" spellcheck="false" tabindex="-1" class="tagify__tag " __isvalid="true" value="@t.TagName">
+                   
+                <div><span class="tagify__tag-text">@t.TagName</span></div>
+            </tag>
+        }
+        <span contenteditable="" data-placeholder="​" aria-placeholder="" class="tagify__input" role="textbox" aria-autocomplete="both" aria-multiline="false"></span>
+        
+    
+
+    <script src="~/js/createItem.js"></script>
+</body>
+</html>

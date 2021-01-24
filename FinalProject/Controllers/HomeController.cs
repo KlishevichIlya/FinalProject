@@ -31,6 +31,13 @@ namespace FinalProject.Controllers
             _userManager = userManager;
         }
 
+
+        public async Task<IActionResult> Lenta()
+        {
+            var allCollection = await _db.Collections.ToListAsync();
+            return View(allCollection);
+        }
+
         public async Task<IActionResult> Index()
         {
             var currentUser = await _userManager.GetUserAsync(User);

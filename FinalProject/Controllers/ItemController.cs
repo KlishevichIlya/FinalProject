@@ -1,6 +1,7 @@
 ﻿using FinalProject.Data;
 using FinalProject.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,11 +14,12 @@ namespace FinalProject.Controllers
     public class ItemController : Controller
     {
         ApplicationDbContext _db;
-        
+        UserManager<User> _userManager;
 
-        public ItemController(ApplicationDbContext db)
+        public ItemController(ApplicationDbContext db, UserManager<User> userManager)
         {
             _db = db;
+            _userManager = userManager;
         }
        
         public IActionResult Create(string id)
@@ -49,12 +51,17 @@ namespace FinalProject.Controllers
 
         public async Task<ActionResult> Index(string id)
         {
+            var currentUser = await _userManager.GetUserAsync(User);
+            var currentCollection = await _db.Collections.FindAsync(id);
+            bool flag = false;
+            if (currentUser.Id == currentCollection.UserId)
+                flag = true;
             Response.Cookies.Append("currentCollection", id);
             var items = await _db.Items.Where(x => x.CollectionId == id).ToListAsync();
             ViewBag.Id = id;
             var tags = await _db.Tags.ToListAsync();
             ViewBag.Tags = tags;
-
+            ViewBag.Flag = flag;
             return View(items);
         }
 
@@ -109,6 +116,19 @@ namespace FinalProject.Controllers
             }
             _db.SaveChanges();
             return RedirectToAction("Index", "Item", new { id = Request.Cookies["currentCollection"] });
+        }
+
+
+        public async Task<IActionResult> Open(string id)
+        {
+            var item = await _db.Items.FindAsync(id);
+            if(item != null)
+            {
+                var tags = await _db.Tags.Where(x => x.ItemId == item.Id).ToListAsync();
+                ViewBag.TagForOpen = tags;
+                return View(item);
+            }
+            return NotFound();
         }
       
     }
