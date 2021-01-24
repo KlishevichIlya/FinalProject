@@ -61,7 +61,7 @@ namespace FinalProject.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
-            var t = Request.Cookies["currentCollection"];
+           
             var item = await _db.Items.FindAsync(id);
             var tags = await _db.Tags.Where(x => x.ItemId == id).ToListAsync();
             if(item != null)
@@ -78,6 +78,38 @@ namespace FinalProject.Controllers
             return NotFound();
         }
 
+
+        public async Task<IActionResult> Edit(string id)
+        {
+            Response.Cookies.Append("currentItem", id);
+            var item = await _db.Items.FindAsync(id);
+            var tagsItem = await _db.Tags.Where(x => x.ItemId == item.Id).ToListAsync();
+            ViewBag.TagForItem = tagsItem;
+            if (item != null)
+                return View(item);
+            else
+                return NotFound();
+        }
+
+        public async Task<IActionResult> Update(string Name, List<string> tags)
+        {
+            string id = Request.Cookies["currentItem"];
+            var curItem = await _db.Items.FindAsync(id);
+            curItem.Name = Name;
+            var oldTags = await _db.Tags.Where(x => x.ItemId == curItem.Id).ToListAsync();
+            foreach(var r in oldTags)
+            {
+                _db.Tags.Remove(r);
+            }
+
+            for (int i = 0; i < tags.Count; i++)
+            {
+                Tag currentTag = new Tag() { TagName = tags[i], ItemId = curItem.Id };
+                await _db.Tags.AddAsync(currentTag);
+            }
+            _db.SaveChanges();
+            return RedirectToAction("Index", "Item", new { id = Request.Cookies["currentCollection"] });
+        }
       
     }
 }

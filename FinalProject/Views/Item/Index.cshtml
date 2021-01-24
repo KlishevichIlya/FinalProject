@@ -62,7 +62,7 @@
             <td>
                 <form asp-action="Delete" asp-controller="Item" asp-route-id="@item.Id" method="post">
                     <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@item.Id">Изменить</a>
-                    <a class="btn btn-sm btn-info" asp-action="ChangePassword" asp-route-id="@item.Id">Сменить пароль</a>
+                    <a class="btn btn-sm btn-info" asp-action="Open" asp-route-id="@item.Id">Открыть</a>
                     <button type="submit" class="btn btn-sm btn-danger">
                         Удалить
                     </button>
