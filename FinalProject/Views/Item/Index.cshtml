@@ -1,6 +1,8 @@
 ﻿@model IEnumerable<FinalProject.Models.Item>
 @{
     ViewBag.Title = "Список элементов";
+    var list = new List<string>();
+   // var currentCollection = Context.Request.Query["id"];
 }
 <html>
 <head>
@@ -36,21 +38,37 @@
         </tr>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>@item.Id</td>
-                <td>@item.Name</td>
-                <td>@item.Tags</td>
-                
-                <td>
-                    @*<form asp-action="Delete" asp-route-id="@user.Id" method="post">
-                            <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@user.Id">Изменить</a>
-                            <a class="btn btn-sm btn-info" asp-action="ChangePassword" asp-route-id="@user.Id">Сменить пароль</a>
-                            <button type="submit" class="btn btn-sm btn-danger">
-                                Удалить
-                            </button>
-                        </form>*@
-                </td>
-            </tr>
+            list.Clear();
+    <tr>
+        <td>@item.Id</td>
+        <td>@item.Name</td>
+
+        @foreach (var tag in ViewBag.Tags)
+        {
+            if (item.Id == tag.ItemId)
+            {
+                list.Add(tag.TagName);
+            }
+        }
+        <td>
+            @foreach (var t in list)
+            {
+
+                @t
+                <br />
+
+            }
+        </td>
+            <td>
+                <form asp-action="Delete" asp-controller="Item" asp-route-id="@item.Id" method="post">
+                    <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@item.Id">Изменить</a>
+                    <a class="btn btn-sm btn-info" asp-action="ChangePassword" asp-route-id="@item.Id">Сменить пароль</a>
+                    <button type="submit" class="btn btn-sm btn-danger">
+                        Удалить
+                    </button>
+                </form>
+            </td>
+        </tr>
         }
     </table>
     <script src="~/js//userList.js"></script>

@@ -28,6 +28,7 @@ namespace FinalProject.Controllers
        
         public async Task<IActionResult> AddItem(string Name, List<string> tags,string id)
         {
+           
             if (Name == null)
                 return NotFound();
             else
@@ -48,11 +49,33 @@ namespace FinalProject.Controllers
 
         public async Task<ActionResult> Index(string id)
         {
+            Response.Cookies.Append("currentCollection", id);
             var items = await _db.Items.Where(x => x.CollectionId == id).ToListAsync();
             ViewBag.Id = id;
-            
+            var tags = await _db.Tags.ToListAsync();
+            ViewBag.Tags = tags;
 
             return View(items);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var t = Request.Cookies["currentCollection"];
+            var item = await _db.Items.FindAsync(id);
+            var tags = await _db.Tags.Where(x => x.ItemId == id).ToListAsync();
+            if(item != null)
+            {
+                _db.Items.Remove(item);
+                foreach(var tg in tags)
+                {
+                    _db.Tags.Remove(tg);
+                }
+               
+                await _db.SaveChangesAsync();
+                return RedirectToAction("Index", "Item", new { id = Request.Cookies["currentCollection"] });
+            }
+            return NotFound();
         }
 
       
