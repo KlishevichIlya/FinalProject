@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Список элементов";
     var list = new List<string>();
-   // var currentCollection = Context.Request.Query["id"];
+ 
 }
 <html>
 <head>
@@ -25,7 +25,22 @@
             Добавить элемент
         </a>
     </div>
-   
+
+
+    <form method="get" asp-route-id="@ViewBag.Id" id="filterForm">
+        <div class="form-inline">
+            <label class="control-label" id="filterLabel">Названия: </label>
+            @Html.DropDownList("itemid",ViewBag.Items as SelectList,new {@class = "custom-select custom-select" })
+
+            @*<label class="control-label">Позиция игрока: </label>
+            @Html.DropDownList("position", Model.Positions as SelectList,
+                    htmlAttributes: new { @class = "form-control" })*@
+
+            <input type="submit" value="Фильтр" class="btn btn-outline-secondary" />
+        </div>
+    </form>
+
+
 
 
 
@@ -39,40 +54,40 @@
         @foreach (var item in Model)
         {
             list.Clear();
-    <tr>
-        <td>@item.Id</td>
-        <td>@item.Name</td>
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
 
-        @foreach (var tag in ViewBag.Tags)
-        {
-            if (item.Id == tag.ItemId)
-            {
-                list.Add(tag.TagName);
-            }
-        }
-        <td>
-            @foreach (var t in list)
-            {
-
-                @t
-                <br />
-
-            }
-        </td>
-            <td>
-                <form asp-action="Delete" asp-controller="Item" asp-route-id="@item.Id" method="post">
-                    @if (ViewBag.Flag == true)
+                @foreach (var tag in ViewBag.Tags)
+                {
+                    if (item.Id == tag.ItemId)
                     {
-                        <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@item.Id">Изменить</a>
-                        <button type="submit" class="btn btn-sm btn-danger">
-                            Удалить
-                        </button>
+                        list.Add(tag.TagName);
                     }
-                    <a class="btn btn-sm btn-info" asp-action="Open" asp-route-id="@item.Id">Открыть</a>
+                }
+                <td>
+                    @foreach (var t in list)
+                    {
 
-                </form>
-            </td>
-        </tr>
+                        @t
+                        <br />
+
+                    }
+                </td>
+                <td>
+                    <form asp-action="Delete" asp-controller="Item" asp-route-id="@item.Id" method="post">
+                        @if (ViewBag.Flag == true)
+                        {
+                            <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@item.Id">Изменить</a>
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                Удалить
+                            </button>
+                        }
+                        <a class="btn btn-sm btn-info" asp-action="Open" asp-route-id="@item.Id">Открыть</a>
+
+                    </form>
+                </td>
+            </tr>
         }
     </table>
     <script src="~/js//userList.js"></script>

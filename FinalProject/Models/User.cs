@@ -13,5 +13,8 @@ namespace FinalProject.Models
 
         public int Year { get; set; }
         public List<Collection> Collections { get; set; }
+
+        public Like Like { get; set; }
+        
     }
 }

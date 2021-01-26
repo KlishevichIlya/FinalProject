@@ -73,5 +73,8 @@ namespace FinalProject.Models
 
         public string CollectionId { get; set; }
         public Collection Collection { get; set; }
+
+       
+        public List<Like> Like { get; set; }
     }
 }

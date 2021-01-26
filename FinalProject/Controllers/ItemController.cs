@@ -3,6 +3,7 @@ using FinalProject.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -49,8 +50,8 @@ namespace FinalProject.Controllers
             return RedirectToAction("Index", "Item", new { id = id });
         }
 
-        public async Task<ActionResult> Index(string id)
-        {
+        public async Task<ActionResult> Index(string id,string[] itemid)
+        {           
             var currentUser = await _userManager.GetUserAsync(User);
             var currentCollection = await _db.Collections.FindAsync(id);
             bool flag = false;
@@ -62,6 +63,13 @@ namespace FinalProject.Controllers
             var tags = await _db.Tags.ToListAsync();
             ViewBag.Tags = tags;
             ViewBag.Flag = flag;
+            ViewBag.Items = new SelectList(items,"Id","Name");
+
+            if (itemid.Length != 0)
+            {
+                var selectedItem = await _db.Items.Where(x => x.Id == itemid[0]).ToListAsync();
+                return View(selectedItem);
+            }
             return View(items);
         }
 
@@ -121,15 +129,53 @@ namespace FinalProject.Controllers
 
         public async Task<IActionResult> Open(string id)
         {
+            var currentUser = await _userManager.GetUserAsync(User);
+            ViewBag.Id = id;
             var item = await _db.Items.FindAsync(id);
             if(item != null)
             {
                 var tags = await _db.Tags.Where(x => x.ItemId == item.Id).ToListAsync();
+                var like = _db.Likes.FirstOrDefault(x => x.UserId == currentUser.Id);
                 ViewBag.TagForOpen = tags;
+                // ViewBag.isLike = like.isLike;
+                if (like == null || like.isLike == false || like.ItemId != id)
+                    ViewBag.isLike = false;
+                else
+                    ViewBag.isLike = true;
                 return View(item);
             }
             return NotFound();
         }
       
+        public async Task<IActionResult> Like(string id)
+        {
+            var currentUser = await _userManager.GetUserAsync(User);
+            var currentLike =  _db.Likes.FirstOrDefault(x => x.UserId == currentUser.Id);
+           
+            if (currentLike == null || currentLike.ItemId != id)
+            {
+                Like like = new Like() { isLike = true, ItemId = id, UserId = currentUser.Id };
+                await _db.Likes.AddAsync(like);
+            }
+            else
+            {
+                bool fl = false;
+                if (currentLike.isLike == true && fl == false)
+                {
+                    currentLike.isLike = false;
+                    fl = true;                    
+                }
+                    
+                if (currentLike.isLike == false && fl == false)
+                {
+                    currentLike.isLike = true;
+                    fl = true;
+                }
+
+                _db.Likes.Add(currentLike);
+            }
+            await _db.SaveChangesAsync();
+            return RedirectToAction("Open", "Item", new { id = id });
+        }
     }
 }

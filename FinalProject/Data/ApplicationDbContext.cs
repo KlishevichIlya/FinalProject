@@ -13,6 +13,8 @@ namespace FinalProject.Data
        // public DbSet<Topic> Topics { get; set; }
         public DbSet<Item> Items { get; set; }
         public DbSet<Tag> Tags { get; set; }
+
+        public DbSet<Like> Likes { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -29,6 +31,9 @@ namespace FinalProject.Data
                 .HasKey(x => x.Id);
             modelBuilder.Entity<Tag>()
                 .HasKey(x => x.Id);
+            modelBuilder.Entity<Like>()
+                .HasKey(x => x.Id);
+
             modelBuilder.Entity<Collection>()
                 .Property(e => e.Id)
                 .ValueGeneratedOnAdd();
@@ -38,6 +43,10 @@ namespace FinalProject.Data
             modelBuilder.Entity<Tag>()
               .Property(e => e.Id)
               .ValueGeneratedOnAdd();
+            modelBuilder.Entity<Like>()
+              .Property(e => e.Id)
+              .ValueGeneratedOnAdd();
+
 
 
             modelBuilder.Entity<User>()
@@ -49,6 +58,16 @@ namespace FinalProject.Data
                 .HasMany(x => x.Tags)
                 .WithOne(x => x.Item)
                 .HasForeignKey(x => x.ItemId);
+
+            modelBuilder.Entity<Like>()
+               .HasOne(x => x.Item)
+               .WithMany(x => x.Like)
+               .HasForeignKey(x => x.ItemId);
+
+            modelBuilder.Entity<Like>()
+              .HasOne(x => x.User)
+              .WithOne(x => x.Like);
+              
 
         }
     }

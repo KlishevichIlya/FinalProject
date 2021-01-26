@@ -13,23 +13,41 @@
     <script src="https://unpkg.com/@@yaireo/tagify"></script>
     <script src="https://unpkg.com/@@yaireo/tagify@3.1.0/dist/tagify.polyfills.min.js"></script>
     <link href="https://unpkg.com/@@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="~/css/createItem.css" />
+    <script src="https://kit.fontawesome.com/7e38d4cf32.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="~/css/open.css" />
 </head>
 <body>
     <h1 class="text-center">@Model.Name</h1>
-    
-        <h3>Теги текущего элемента:</h3>       
-        @foreach (var t in ViewBag.TagForOpen)
-        {
-            <tag title="@t.TagName" contenteditable="false" spellcheck="false" tabindex="-1" class="tagify__tag " __isvalid="true" value="@t.TagName">
-                   
-                <div><span class="tagify__tag-text">@t.TagName</span></div>
-            </tag>
-        }
-        <span contenteditable="" data-placeholder="​" aria-placeholder="" class="tagify__input" role="textbox" aria-autocomplete="both" aria-multiline="false"></span>
-        
-    
 
-    <script src="~/js/createItem.js"></script>
+    
+    <div class="container" id="like">
+        @if (ViewBag.isLike == false)
+        {
+            <a href="~/Item/Like?id=@ViewBag.Id" id="btn" onclick="Toogle()" class="far fa-heart"></a>
+        }
+        @if (ViewBag.isLike == true)
+        {
+            <a href="~/Item/Like?id=@ViewBag.Id" id="btn" onclick="Toogle()" class="fas fa-heart"></a>
+        }
+
+
+
+    </div>
+   
+
+    <h3>Теги текущего элемента:</h3>       
+    @foreach (var t in ViewBag.TagForOpen)
+    {
+        <tag title="@t.TagName" contenteditable="false" spellcheck="false" tabindex="-1" class="tagify__tag " __isvalid="true" value="@t.TagName">
+                   
+            <div><span class="tagify__tag-text">@t.TagName</span></div>
+        </tag>
+    }
+    <span contenteditable="" data-placeholder="​" aria-placeholder="" class="tagify__input" role="textbox" aria-autocomplete="both" aria-multiline="false"></span>
+        
+    <hr />
+
+
+    <script src="~/js/open.js"></script>
 </body>
 </html>
