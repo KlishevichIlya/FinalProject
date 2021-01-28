@@ -1,4 +1,6 @@
-﻿@model FinalProject.Models.Collection
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@model FinalProject.Models.Collection
+@inject IViewLocalizer Localizer
 
 <!DOCTYPE html>
 <html>
@@ -12,20 +14,20 @@
 <body>
 
     <form class="form-border" asp-action="Create" asp-controller="Home" enctype="multipart/form-data">
-        <h3 class="display-4" style="text-align:center; margin-bottom:55px;">Создание коллекции</h3>
+        <h3 class="display-4" style="text-align:center; margin-bottom:55px;">@Localizer["Header"]</h3>
         <div asp-validation-summary="All" class="text-danger"></div>
         <div class="form-group">
-            <label asp-for="name" class="control-label nubex1">Имя</label>
+            <label asp-for="name" class="control-label nubex1">@Localizer["Field1"]</label>
             <input type="text" asp-for="name" class="form-control" />
         </div>
         <div class="form-group">
-            <label asp-for="Topic" class="control-label nubex1">Тема</label>
+            <label asp-for="Topic" class="control-label nubex1">@Localizer["Field2"]</label>
             <select asp-for="Topic" asp-items="Html.GetEnumSelectList<FinalProject.Models.Topic.Genre>()" class="form-control">
             </select>
         </div>
         <div class="form-group">
-            <label asp-for="description" class="control-label nubex1">Описание</label>
-            <textarea type="text" asp-for="description" class="form-control" style="height:200px;resize:none;margin-bottom:45px;"></textarea>
+            <label asp-for="description" class="control-label nubex1">@Localizer["Field3"]</label>
+            <textarea id="textarea" type="text" asp-for="description" class="form-control" style="height:200px;resize:none;margin-bottom:45px;"></textarea>
         </div>
 
         @*<div class="form-group">
@@ -34,14 +36,14 @@
             <span asp-validation-for="formFile" class="text-danger"></span>
             </div>*@
         <div class="drop-zone marg">
-            <span class="drop-zone__prompt">Drop file here or click to upload (.jpg, .png, .gif, .jpeg)</span>
+            <span class="drop-zone__prompt">@Localizer["Helper"] (.jpg, .png, .gif, .jpeg)</span>
             <input type="file" asp-for="formFile" class="drop-zone__input" />
         </div>
-        
+
 
 
         <div class="form-group">
-            <input type="submit" value="Добавить" class="btn btn-outline-success but" />
+            <input type="submit" value="@Localizer["Button"]" class="btn btn-outline-success but" />
         </div>
     </form>
 

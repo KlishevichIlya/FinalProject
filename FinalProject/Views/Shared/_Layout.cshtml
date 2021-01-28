@@ -1,4 +1,25 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Options
+
+@inject IViewLocalizer Localizer
+@inject IOptions<RequestLocalizationOptions> LocOptions
+
+@{
+    // получаем сервис IRequestCultureFeature
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    // получаем список поддерживаемых культур
+    var cultureItems = LocOptions.Value.SupportedUICultures
+        .Select(c => new SelectListItem { Value = c.Name, Text = c.NativeName })
+        .ToList();
+}
+
+
+
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -18,14 +39,14 @@
     {
         <link rel="stylesheet" href="~/css/site2.css" />
     }
-        <link rel="stylesheet" href="~/css/theme.css" />
-    </head>
-
-    
+    <link rel="stylesheet" href="~/css/theme.css" />
+</head>
 
 
 
-  
+
+
+
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -39,24 +60,26 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Моя страница</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">@Localizer["MainButton"]</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Lenta">Лента</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Lenta">@Localizer["FeedButton"]</a>
                         </li>
                         @if (User.IsInRole("admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Администрирование</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">@Localizer["AdminButton"]</a>
                             </li>
                         }
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Настройки</a>
+                            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@Localizer["SettingButton"]</a>
 
                             <div class="dropdown-menu" aria-labelledby="dropdown01">
-                                <a data-toggle="modal" data-target="#exampleModal" class="dropdown-item">Тема</a>
-
+                                <a data-toggle="modal" data-target="#exampleModal" class="dropdown-item">@Localizer["ThemeButton"]</a>
+                                <a data-toggle="modal" data-target="#exampleModal2" class="dropdown-item">@Localizer["LanguageButton"]</a>
                             </div>
+
+
                         </li>
                     </ul>
 
@@ -69,7 +92,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="#exampleModalLabel"> Modal Title</h5>
+                    <h5 class="modal-title" id="#exampleModalLabel">@Localizer["ModalTitle1"]</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -84,18 +107,52 @@
                         {
                             <input id="selectTheme" type="checkbox" checked name="" />
                         }
-                        @if (Context.Request.Cookies["theme"] == null) { 
-                            <input id="selectTheme" type="checkbox"  name="" />
-                        }   
-                        </div>
+                        @if (Context.Request.Cookies["theme"] == null)
+                        {
+                            <input id="selectTheme" type="checkbox" name="" />
+                        }
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                    <button class="btn btn-secondary" data-dismiss="modal">@Localizer["CloseButton"]</button>
                     <form action="~/Home/Index">
-                        <button type="submit" class="btn btn-primary">Применить</button>
+                        <button type="submit" class="btn btn-primary">@Localizer["ApplyButton"]</button>
                     </form>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModal2" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="#exampleModalLabel">@Localizer["ModalTitle2"]</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center" style="height:100px;">
+                    
+                       <form asp-controller="Home" asp-action="SetLanguage" 
+                          asp-route-returnUrl="@Context.Request.Path@Context.Request.QueryString"
+                          method="post" class="form-horizontal">
+                        Language: <select name="culture" onchange="this.form.submit();"
+                                  asp-for="@requestCulture.RequestCulture.UICulture.Name"
+                                  asp-items="cultureItems"></select>
+                        </form>
                     
                 </div>
+                @*<div class="modal-footer">
+                        <button class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                        <form action="~/Home/Index">
+                            <button type="submit" class="btn btn-primary">Применить</button>
+                        </form>
+
+                    </div>*@
 
             </div>
 

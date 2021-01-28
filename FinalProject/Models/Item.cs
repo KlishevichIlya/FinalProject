@@ -76,5 +76,6 @@ namespace FinalProject.Models
 
        
         public List<Like> Like { get; set; }
+        public List<Comment> Comments { get; set; }
     }
 }

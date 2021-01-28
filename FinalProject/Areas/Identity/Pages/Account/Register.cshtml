@@ -1,5 +1,8 @@
 ﻿@page
 @model RegisterModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @{
     ViewData["Title"] = "Register";
 }
@@ -16,28 +19,28 @@
 <body class="text-center">
     <main class="form-signin">
         <form method="post" asp-route-returnUrl="@Model.ReturnUrl">
-            <h1 class="h3 mb-3 fw-normal">Регистрация</h1>
+            <h1 class="h3 mb-3 fw-normal">@Localizer["Reg"]</h1>
 
             <label asp-for="Input.Email" hidden>Email</label>
             <input type="text" asp-for="Input.Email" class="form-control" placeholder="Email" required="" autofocus="">
 
             <label asp-for="Input.FirstName" hidden>FirstName</label>
-            <input type="text" asp-for="Input.FirstName" class="form-control" placeholder="Имя" required="">
+            <input type="text" asp-for="Input.FirstName" class="form-control" placeholder="@Localizer["Name"]" required="">
 
             <label asp-for="Input.SecondName" hidden>SecondName</label>
-            <input type="text" asp-for="Input.SecondName" class="form-control" placeholder="Фамилия" required="">
+            <input type="text" asp-for="Input.SecondName" class="form-control" placeholder="@Localizer["Surname"]" required="">
 
             <label asp-for="Input.Year" hidden>Year</label>
-            <input type="number" asp-for="Input.Year" class="form-control" placeholder="Год Рождения" required="">
+            <input type="number" asp-for="Input.Year" class="form-control" placeholder="@Localizer["Year"]" required="">
 
             <label asp-for="Input.Password" hidden>Password</label>
-            <input type="password" asp-for="Input.Password" class="form-control" placeholder="Пароль" required="">
+            <input type="password" asp-for="Input.Password" class="form-control" placeholder="@Localizer["Password"]" required="">
 
             <label asp-for="Input.ConfirmPassword" hidden>PasswordConfirm</label>
-            <input type="password" asp-for="Input.ConfirmPassword" class="form-control marg" placeholder="Подтверите пароль" required="">
+            <input type="password" asp-for="Input.ConfirmPassword" class="form-control marg" placeholder="@Localizer["Confirm"]" required="">
 
 
-            <button class="w-100 btn btn-lg btn-primary" type="submit">Зарегестрироваться</button>
+            <button class="w-100 btn btn-lg btn-primary" type="submit">@Localizer["Button"]</button>
 
         </form>
     </main>
@@ -45,33 +48,33 @@
     <section>
         @if (!((Model.ExternalLogins?.Count ?? 0) == 0))
         {
-            <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                <div>
-                    <p>
-                        @foreach (var provider in Model.ExternalLogins)
+        <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+            <div>
+                <p>
+                    @foreach (var provider in Model.ExternalLogins)
                         {
-                            @*<button type="submit" class="w-100 btn btn-lg btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>*@
-                            @if (provider.Name == "Google")
+                    @*<button type="submit" class="w-100 btn btn-lg btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>*@
+                    @if (provider.Name == "Google")
                             {
-                                <button class="loginBtn loginBtn--google" name="provider" value="@provider.Name">
-                                    Sign up with @provider.DisplayName  
-                                </button>
+                    <button class="loginBtn loginBtn--google" name="provider" value="@provider.Name">
+                        Sign up with @provider.DisplayName
+                    </button>
                             }
-                            @if (provider.Name == "Facebook")
+                    @if (provider.Name == "Facebook")
                             {
-                                <button type="submit" class="loginBtn loginBtn--facebook" name="provider" value="@provider.Name">
-                                    Sign up with @provider.DisplayName
-                                </button>
+                    <button type="submit" class="loginBtn loginBtn--facebook" name="provider" value="@provider.Name">
+                        Sign up with @provider.DisplayName
+                    </button>
                             }
 
                         }
-                    </p>
-                </div>
+                </p>
+            </div>
 
-            </form>
+        </form>
         }
     </section>
-   
+
 </body>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

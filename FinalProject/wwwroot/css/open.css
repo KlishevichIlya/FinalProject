@@ -26,3 +26,33 @@
 .fas{
     color:#f50057;
 }
+.custom-container {
+    width: 65%;
+    margin-right: auto;
+    margin-left: auto;
+    box-shadow: 0 2px 8px rgba(0,0,0,.1);
+    border-radius: 10px;
+}
+
+.custom-text {
+    line-height: 1.2;
+    font-size:25px;
+    margin-right:auto;
+    margin-left:auto;
+}
+
+.input-group{
+    width:50%;
+    margin-top:45px;
+    margin-left:auto;
+    margin-right:auto;
+}
+.old-comment {
+    width: 55%;
+    margin-right: auto;
+    margin-left: auto;
+    box-shadow: 0 2px 8px rgba(0,0,0,.1);
+    border-radius: 10px;
+    padding:10px;
+    margin-top:10px;
+}

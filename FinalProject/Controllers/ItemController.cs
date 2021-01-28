@@ -136,7 +136,9 @@ namespace FinalProject.Controllers
             {
                 var tags = await _db.Tags.Where(x => x.ItemId == item.Id).ToListAsync();
                 var like = _db.Likes.FirstOrDefault(x => x.UserId == currentUser.Id);
+                
                 ViewBag.TagForOpen = tags;
+                
                 // ViewBag.isLike = like.isLike;
                 if (like == null || like.isLike == false || like.ItemId != id)
                     ViewBag.isLike = false;
@@ -177,5 +179,21 @@ namespace FinalProject.Controllers
             await _db.SaveChangesAsync();
             return RedirectToAction("Open", "Item", new { id = id });
         }
+
+
+        //public async void Comment(string id, string message)
+        //{
+        //   var currentUser = await _userManager.GetUserAsync(User);
+        //   if(id != null && message != null)
+        //    {
+        //        Comment comment = new Comment() { ItemId = id, Text = message, UserId = currentUser.Id };
+        //        _db.Comments.Add(comment);
+        //    }
+
+        //    await _db.SaveChangesAsync();
+
+        //   // return NotFound();
+        //}
+
     }
 }

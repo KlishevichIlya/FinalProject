@@ -4,6 +4,7 @@ using FinalProject.Models;
 using FinalProject.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -40,9 +41,18 @@ namespace FinalProject.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var currentUser = await _userManager.GetUserAsync(User);
-            var items =  _db.Collections.Where(x => x.User == currentUser );
-            return View(items);
+            if (User.Identity.IsAuthenticated)
+            {
+                var currentUser = await _userManager.GetUserAsync(User);
+                var items = _db.Collections.Where(x => x.User == currentUser);
+               
+                return View(items);
+            }
+            else
+            {
+                return Redirect("~/Identity/Account/Login");
+            }
+           
         }
 
         public IActionResult Create()
@@ -157,6 +167,19 @@ namespace FinalProject.Controllers
             var fileExtension = Path.GetExtension(fileName);
             var fileNameForStorage = $"{title}-{DateTime.Now.ToString("yyyyMMddHHmmss")}{fileExtension}";
             return fileNameForStorage;
+        }
+
+
+        [HttpPost]
+        public IActionResult SetLanguage(string culture, string returnUrl)
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1), IsEssential = true }
+            );
+
+            return LocalRedirect(returnUrl);
         }
     }
 }

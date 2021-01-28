@@ -19,7 +19,7 @@
 <body>
     <h1 class="text-center">@Model.Name</h1>
 
-    
+
     <div class="container" id="like">
         @if (ViewBag.isLike == false)
         {
@@ -33,21 +33,45 @@
 
 
     </div>
-   
 
-    <h3>Теги текущего элемента:</h3>       
+
+    <h3>Теги текущего элемента:</h3>
     @foreach (var t in ViewBag.TagForOpen)
     {
         <tag title="@t.TagName" contenteditable="false" spellcheck="false" tabindex="-1" class="tagify__tag " __isvalid="true" value="@t.TagName">
-                   
+
             <div><span class="tagify__tag-text">@t.TagName</span></div>
         </tag>
     }
     <span contenteditable="" data-placeholder="​" aria-placeholder="" class="tagify__input" role="textbox" aria-autocomplete="both" aria-multiline="false"></span>
-        
+
     <hr />
+    <div class="custom-container text-center" style="padding-bottom: 50px;">
+        <h4 class="custom-text text-center">Комментарии пользователей</h4>
+        <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Nick</span>
+            </div>
+            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="nick" />
+        </div>
 
+        <div class="input-group input-group-sm mb-3" style="margin-top:10px;">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-sm">Comment</span>
+            </div>
+            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" id="message" />
+        </div>
+        <br />
 
-    <script src="~/js/open.js"></script>
+        <input type="submit" id="sendBtn" value="Отправить" class="btn btn-info" style="margin-bottom:25px;" />
+        <br />
+        <span class="text-center" style="font-size:20px;font-weight:bold;">Старые комментарии</span>
+        <div class="old-comment text-left" id="chatroom">
+
+        </div>
+    </div>
+        @*<div id="oldcommets"></div>*@
+        <script src="~/js/signalr/dist/browser/signalr.min.js"></script>
+        <script src="~/js/open.js"></script>
 </body>
 </html>

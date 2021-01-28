@@ -1,8 +1,11 @@
 ﻿@model IEnumerable<FinalProject.Models.Item>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @{
     ViewBag.Title = "Список элементов";
     var list = new List<string>();
- 
+
 }
 <html>
 <head>
@@ -15,28 +18,28 @@
 </head>
 
 <body>
-    <h1 class="text-center">Все элементы</h1>
+    <h1 class="text-center">@Localizer["Header"]</h1>
 
-    <a data-toggle="modal" data-target="#exampleModal2" class="btn btn-info btn-sm" id="addButton">
-        Добавить поле
+    <a data-toggle="modal" data-target="#exampleModal3" class="btn btn-info btn-sm" id="addButton">
+        @Localizer["AddField"]
     </a>
     <div>
         <a href="~/Item/Create?id=@ViewBag.Id" class="btn btn-sm btn-outline-success">
-            Добавить элемент
+            @Localizer["AddItem"]
         </a>
     </div>
 
 
     <form method="get" asp-route-id="@ViewBag.Id" id="filterForm">
         <div class="form-inline">
-            <label class="control-label" id="filterLabel">Названия: </label>
+            <label class="control-label" id="filterLabel">@Localizer["Filters"]: </label>
             @Html.DropDownList("itemid",ViewBag.Items as SelectList,new {@class = "custom-select custom-select" })
 
             @*<label class="control-label">Позиция игрока: </label>
-            @Html.DropDownList("position", Model.Positions as SelectList,
-                    htmlAttributes: new { @class = "form-control" })*@
+                @Html.DropDownList("position", Model.Positions as SelectList,
+                        htmlAttributes: new { @class = "form-control" })*@
 
-            <input type="submit" value="Фильтр" class="btn btn-outline-secondary" />
+            <input type="submit" value="@Localizer["FButton"]" class="btn btn-outline-secondary" />
         </div>
     </form>
 
@@ -47,47 +50,47 @@
     <table class="table table-striped table-bordered">
         <tr>
             <th>Id</th>
-            <th>Имя</th>
-            <th>Теги</th>
-            <th>Действия</th>
+            <th>@Localizer["Field1"]</th>
+            <th>@Localizer["Field2"]</th>
+            <th>@Localizer["Field3"]</th>
         </tr>
         @foreach (var item in Model)
         {
             list.Clear();
-            <tr>
-                <td>@item.Id</td>
-                <td>@item.Name</td>
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Name</td>
 
-                @foreach (var tag in ViewBag.Tags)
+            @foreach (var tag in ViewBag.Tags)
                 {
                     if (item.Id == tag.ItemId)
                     {
                         list.Add(tag.TagName);
                     }
                 }
-                <td>
-                    @foreach (var t in list)
+            <td>
+                @foreach (var t in list)
                     {
 
-                        @t
-                        <br />
+                @t
+                <br />
 
                     }
-                </td>
-                <td>
-                    <form asp-action="Delete" asp-controller="Item" asp-route-id="@item.Id" method="post">
-                        @if (ViewBag.Flag == true)
+            </td>
+            <td>
+                <form asp-action="Delete" asp-controller="Item" asp-route-id="@item.Id" method="post">
+                    @if (ViewBag.Flag == true)
                         {
-                            <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@item.Id">Изменить</a>
-                            <button type="submit" class="btn btn-sm btn-danger">
-                                Удалить
-                            </button>
+                    <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@item.Id">@Localizer["B1"]</a>
+                    <button type="submit" class="btn btn-sm btn-danger">
+                        @Localizer["B2"]
+                    </button>
                         }
-                        <a class="btn btn-sm btn-info" asp-action="Open" asp-route-id="@item.Id">Открыть</a>
+                    <a class="btn btn-sm btn-info" href="~/Item/Open?id=@item.Id">@Localizer["B3"]</a>
 
-                    </form>
-                </td>
-            </tr>
+                </form>
+            </td>
+        </tr>
         }
     </table>
     <script src="~/js//userList.js"></script>
@@ -96,27 +99,27 @@
 
 
 
-    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModal2" aria-hidden="true">
+    <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModal2" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="#exampleModalLabel">Добавление нового поля</h5>
+                    <h5 class="modal-title" id="#exampleModalLabel">@Localizer["H1"]</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body" style="height:200px;">
                     <div>
-                        <label class="control-label">Тип поля</label>
+                        <label class="control-label">@Localizer["T1"]</label>
                         <select asp-items="Html.GetEnumSelectList<FinalProject.Models.Field.CustomField>()" class="form-control"> </select>
-                        <label class="control-label">Название поля</label>
-                        <input type="text" placeholder="Название..." class="form-control" />
+                        <label class="control-label">@Localizer["F1"]</label>
+                        <input type="text" placeholder="" class="form-control" />
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                    <button class="btn btn-secondary" data-dismiss="modal">@Localizer["C1"]</button>
                     <form action="~/Home/Index">
-                        <button type="submit" class="btn btn-primary">Применить</button>
+                        <button type="submit" class="btn btn-primary">@Localizer["Bt"]</button>
                     </form>
 
                 </div>

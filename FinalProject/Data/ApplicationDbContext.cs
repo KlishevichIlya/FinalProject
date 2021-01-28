@@ -15,6 +15,9 @@ namespace FinalProject.Data
         public DbSet<Tag> Tags { get; set; }
 
         public DbSet<Like> Likes { get; set; }
+
+        public DbSet<Comment> Comments { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -33,6 +36,8 @@ namespace FinalProject.Data
                 .HasKey(x => x.Id);
             modelBuilder.Entity<Like>()
                 .HasKey(x => x.Id);
+            modelBuilder.Entity<Comment>()
+               .HasKey(x => x.Id);
 
             modelBuilder.Entity<Collection>()
                 .Property(e => e.Id)
@@ -46,6 +51,9 @@ namespace FinalProject.Data
             modelBuilder.Entity<Like>()
               .Property(e => e.Id)
               .ValueGeneratedOnAdd();
+            modelBuilder.Entity<Comment>()
+             .Property(e => e.Id)
+             .ValueGeneratedOnAdd();
 
 
 
@@ -67,7 +75,15 @@ namespace FinalProject.Data
             modelBuilder.Entity<Like>()
               .HasOne(x => x.User)
               .WithOne(x => x.Like);
-              
+
+            modelBuilder.Entity<Comment>()
+                .HasOne(x => x.Item)
+                .WithMany(x => x.Comments)
+                .HasForeignKey(x => x.ItemId);
+
+
+           
+
 
         }
     }
