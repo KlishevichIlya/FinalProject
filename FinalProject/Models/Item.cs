@@ -50,6 +50,7 @@ namespace FinalProject.Models
 
 
         public DateTime FDate1 { get; set; }
+      
         public string FDate1_Name { get; set; }
 
         public DateTime FDate2 { get; set; }

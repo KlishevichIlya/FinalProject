@@ -142,7 +142,8 @@ namespace FinalProject.Controllers
             if(item != null)
             {
                 _db.Collections.Remove(item);
-                await _db.SaveChangesAsync();
+                //await _db.SaveChangesAsync();
+                _db.SaveChanges();
                 return RedirectToAction("Index", "Home");
             }
 

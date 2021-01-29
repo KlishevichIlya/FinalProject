@@ -14,9 +14,13 @@
 
 <body>
     <h1 class="text-center">Все пользователи</h1>
-    
+
     <a asp-action="Create" class="btn btn-info btn-sm" id="addButton">
         <span class="glyphicon glyphicon-plus"></span> Добавить пользователя
+    </a>
+    <br />
+    <a asp-action="Index" asp-controller="Roles" class="btn btn-warning btn-sm" style="margin-bottom:25px;">
+        <span class="glyphicon glyphicon-plus"></span> Роли
     </a>
 
 
@@ -30,20 +34,20 @@
         </tr>
         @foreach (var user in Model)
         {
-            <tr>
-                <td>@user.Id</td>
-                <td>@user.Email</td>
-                <td>@user.Year</td>
-                <td>
-                    <form asp-action="Delete" asp-route-id="@user.Id" method="post">
-                        <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@user.Id">Изменить</a>
-                        <a class="btn btn-sm btn-info" asp-action="ChangePassword" asp-route-id="@user.Id">Сменить пароль</a>
-                        <button type="submit" class="btn btn-sm btn-danger">
-                            Удалить
-                        </button>
-                    </form>
-                </td>
-            </tr>
+        <tr>
+            <td>@user.Id</td>
+            <td>@user.Email</td>
+            <td>@user.Year</td>
+            <td>
+                <form asp-action="Delete" asp-route-id="@user.Id" method="post">
+                    <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@user.Id">Изменить</a>
+                    <a class="btn btn-sm btn-info" asp-action="ChangePassword" asp-route-id="@user.Id">Сменить пароль</a>
+                    <button type="submit" class="btn btn-sm btn-danger">
+                        Удалить
+                    </button>
+                </form>
+            </td>
+        </tr>
         }
     </table>
     <script src="~/js//userList.js"></script>

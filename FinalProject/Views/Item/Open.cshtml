@@ -23,11 +23,11 @@
     <div class="container" id="like">
         @if (ViewBag.isLike == false)
         {
-            <a href="~/Item/Like?id=@ViewBag.Id" id="btn" onclick="Toogle()" class="far fa-heart"></a>
+        <a href="~/Item/Like?id=@ViewBag.Id" id="btn" onclick="Toogle()" class="far fa-heart"></a>
         }
         @if (ViewBag.isLike == true)
         {
-            <a href="~/Item/Like?id=@ViewBag.Id" id="btn" onclick="Toogle()" class="fas fa-heart"></a>
+        <a href="~/Item/Like?id=@ViewBag.Id" id="btn" onclick="Toogle()" class="fas fa-heart"></a>
         }
 
 
@@ -38,12 +38,100 @@
     <h3>Теги текущего элемента:</h3>
     @foreach (var t in ViewBag.TagForOpen)
     {
-        <tag title="@t.TagName" contenteditable="false" spellcheck="false" tabindex="-1" class="tagify__tag " __isvalid="true" value="@t.TagName">
+    <tag title="@t.TagName" contenteditable="false" spellcheck="false" tabindex="-1" class="tagify__tag " __isvalid="true" value="@t.TagName">
 
-            <div><span class="tagify__tag-text">@t.TagName</span></div>
-        </tag>
+        <div><span class="tagify__tag-text">@t.TagName</span></div>
+    </tag>
     }
     <span contenteditable="" data-placeholder="​" aria-placeholder="" class="tagify__input" role="textbox" aria-autocomplete="both" aria-multiline="false"></span>
+
+    <h2>Дополнительные поля элемента:</h2>
+    @if(ViewBag.FInt1_Name != null)
+            {
+    <h4>@ViewBag.FInt1_Name</h4>
+    <h4>@ViewBag.FInt1</h4>
+            }
+    @if(ViewBag.FInt2_Name != null)
+            {
+    <h4>@ViewBag.FInt2_Name</h4>
+    <h4>@ViewBag.FInt2</h4>
+            }
+    @if(ViewBag.FInt3_Name != null)
+            {
+    <h4>@ViewBag.FInt3_Name</h4>
+    <h4>@ViewBag.FInt3</h4>
+            }
+
+    @if(ViewBag.FStr1_Name != null)
+            {
+    <h4>@ViewBag.FStr1_Name</h4>
+    <h4>@ViewBag.FStr1</h4>
+            }
+    @if(ViewBag.FStr2_Name != null)
+            {
+    <h4>@ViewBag.FStr2_Name</h4>
+    <h4>@ViewBag.FStr2</h4>
+            }
+    @if(ViewBag.FStr3_Name != null)
+            {
+    <h4>@ViewBag.FStr3_Name</h4>
+    <h4>@ViewBag.FStr3</h4>
+            }
+
+
+
+    @if(ViewBag.FText1_Name != null)
+            {
+    <h4>@ViewBag.FText1_Name</h4>
+    <h4>@ViewBag.FText1</h4>
+            }
+    @if(ViewBag.FText2_Name != null)
+            {
+    <h4>@ViewBag.FText2_Name</h4>
+    <h4>@ViewBag.FText2</h4>
+            }
+    @if(ViewBag.FText3_Name != null)
+            {
+    <h4>@ViewBag.FText3_Name</h4>
+    <h4>@ViewBag.FText3</h4>
+            }
+
+
+    @if(ViewBag.FDate1_Name != null)
+            {
+    <h4>@ViewBag.FDate1_Name</h4>
+    <h4>@ViewBag.FDate1</h4>
+            }
+    @if(ViewBag.FDate2_Name != null)
+            {
+    <h4>@ViewBag.FDate2_Name</h4>
+    <h4>@ViewBag.FDate2</h4>
+            }
+    @if(ViewBag.FDate3_Name != null)
+            {
+    <h4>@ViewBag.FDate3_Name</h4>
+    <h4>@ViewBag.FDate3</h4>
+            }
+
+
+
+
+    @if(ViewBag.FChBox1_Name != null)
+            {
+    <h4>@ViewBag.FChBox1_Name</h4>
+    <h4>@ViewBag.FChBox1</h4>
+            }
+    @if(ViewBag.FChBox2_Name != null)
+            {
+    <h4>@ViewBag.FChBox2_Name</h4>
+    <h4>@ViewBag.FChBox2</h4>
+            }
+    @if(ViewBag.FChBox3_Name != null)
+            {
+    <h4>@ViewBag.FChBox3_Name</h4>
+    <h4>@ViewBag.FChBox3</h4>
+            }
+
 
     <hr />
     <div class="custom-container text-center" style="padding-bottom: 50px;">
@@ -70,8 +158,8 @@
 
         </div>
     </div>
-        @*<div id="oldcommets"></div>*@
-        <script src="~/js/signalr/dist/browser/signalr.min.js"></script>
-        <script src="~/js/open.js"></script>
+    @*<div id="oldcommets"></div>*@
+    <script src="~/js/signalr/dist/browser/signalr.min.js"></script>
+    <script src="~/js/open.js"></script>
 </body>
 </html>
