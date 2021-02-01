@@ -1,0 +1,27 @@
+﻿@import url('https://fonts.googleapis.com/css?family=Muli:300,400,700,900');
+
+h1{
+    margin-bottom:50px;
+}
+th{
+    text-align:center;
+    font-size:18px;
+}
+td{
+    text-align:center;
+}
+
+#addButton{
+    margin-bottom:25px;
+}
+
+#filterLabel{
+    font-size:18px;
+    margin-right:50px;
+    margin-top:20px;
+    margin-bottom:20px;
+}
+
+
+
+

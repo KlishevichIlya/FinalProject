@@ -1,16 +1,56 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Options
+
+@inject IViewLocalizer Localizer
+@inject IOptions<RequestLocalizationOptions> LocOptions
+
+@{
+    // получаем сервис IRequestCultureFeature
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    // получаем список поддерживаемых культур
+    var cultureItems = LocOptions.Value.SupportedUICultures
+        .Select(c => new SelectListItem { Value = c.Name, Text = c.NativeName })
+        .ToList();
+}
+
+
+
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - FinalProject</title>
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/navbars/">
+    <script src="https://kit.fontawesome.com/7e38d4cf32.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    @{
+        var cookieValue = Context.Request.Cookies["theme"];
+    }
+    @if (cookieValue == "false")
+    {
+        <link rel="stylesheet" href="~/css/site.css" />
+    }
+    @if (cookieValue == "true")
+    {
+        <link rel="stylesheet" href="~/css/site2.css" />
+    }
+    <link rel="stylesheet" href="~/css/theme.css" />
 </head>
+
+
+
+
+
+
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
+            <div class="container" style="margin-left:unset;margin-right:unset;max-width:none;">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">FinalProject</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -20,16 +60,111 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Моя страница</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">@Localizer["MainButton"]</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Lenta">@Localizer["FeedButton"]</a>
                         </li>
+                        @if (User.IsInRole("admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">@Localizer["AdminButton"]</a>
+                            </li>
+
+                        }
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@Localizer["SettingButton"]</a>
+
+                            <div class="dropdown-menu" aria-labelledby="dropdown01">
+                                <a data-toggle="modal" data-target="#exampleModal" class="dropdown-item">@Localizer["ThemeButton"]</a>
+                                <a data-toggle="modal" data-target="#exampleModal2" class="dropdown-item">@Localizer["LanguageButton"]</a>
+                            </div>
+
+
+                        </li>
+
                     </ul>
+                    
                 </div>
             </div>
         </nav>
     </header>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="#exampleModalLabel">@Localizer["ModalTitle1"]</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="height:70px;">
+                    
+                    <div class="text-center">
+                        <i class="fa fa-sun-o" aria-hidden="true" style="font-size:2em;"></i>
+                        @if (Context.Request.Cookies["theme"] == "false")
+                        {
+                            <input id="selectTheme" type="checkbox" name="" />
+                        }
+                        @if (Context.Request.Cookies["theme"] == "true")
+                        {
+                            <input id="selectTheme" type="checkbox" checked name="" />
+                        }
+                        @if (Context.Request.Cookies["theme"] == null)
+                        {
+                            <input id="selectTheme" type="checkbox" name="" />
+                        }
+                        <i class="fa fa-moon-o" aria-hidden="true" style="font-size:2em;"></i>
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal">@Localizer["CloseButton"]</button>
+                    <form action="~/Home/Index">
+                        <button type="submit" class="btn btn-primary">@Localizer["ApplyButton"]</button>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModal2" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="#exampleModalLabel">@Localizer["ModalTitle2"]</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center" style="height:100px;">
+                    
+                       <form asp-controller="Home" asp-action="SetLanguage" 
+                          asp-route-returnUrl="@Context.Request.Path@Context.Request.QueryString"
+                          method="post" class="form-horizontal">
+                        Language: <select name="culture" onchange="this.form.submit();"
+                                  asp-for="@requestCulture.RequestCulture.UICulture.Name"
+                                  asp-items="cultureItems"></select>
+                        </form>
+                    
+                </div>
+                @*<div class="modal-footer">
+                        <button class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                        <form action="~/Home/Index">
+                            <button type="submit" class="btn btn-primary">Применить</button>
+                        </form>
+
+                    </div>*@
+
+            </div>
+
+        </div>
+    </div>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -38,12 +173,18 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2021 - FinalProject - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2021 - FinalProject - <a href="tg://resolve?domain=KlishevichIlya">Telegram</a>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <link rel="stylesheet" href="css/bootstrap.css" />
+
+    <script src="~/js/site.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
+
+

@@ -1,0 +1,156 @@
+﻿@model IEnumerable<FinalProject.Models.Item>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewBag.Title = "Список элементов";
+    var list = new List<string>();
+    bool f1 = false;
+   
+}
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+
+
+    <link rel="stylesheet" href="~/css/userList.css" />
+</head>
+
+<body>
+    <h1 class="text-center">@Localizer["Header"]</h1>
+    @if(ViewBag.Flag == true) {
+    <a data-toggle="modal" data-target="#exampleModal3" class="btn btn-info btn-sm" id="addButton">
+        @Localizer["AddField"]
+    </a>
+    <div>
+        <a href="~/Item/Create?id=@ViewBag.Id" class="btn btn-sm btn-outline-success">
+            @Localizer["AddItem"]
+        </a>        
+    </div>
+    }
+
+    <form method="get" asp-route-id="@ViewBag.Id" id="filterForm">
+        <div class="form-inline">
+            <label class="control-label" id="filterLabel">@Localizer["Filters"]: </label>
+            @Html.DropDownList("itemid",ViewBag.Items as SelectList,new {@class = "custom-select custom-select" })
+
+            @*<label class="control-label">Позиция игрока: </label>
+                @Html.DropDownList("position", Model.Positions as SelectList,
+                        htmlAttributes: new { @class = "form-control" })*@
+
+            <input type="submit" value="@Localizer["FButton"]" class="btn btn-outline-secondary" />
+        </div>
+    </form>
+
+
+
+
+
+    <table class="table table-striped table-bordered">
+      
+        <tr>
+            <th>Id</th>
+            <th>@Localizer["Field1"]</th>
+            <th>@Localizer["Field2"]</th>
+
+            @*@if(@Model.ToList()[0].FInt1_Name != null){
+            <th>@Model.ToList()[0].FInt1_Name</th>
+            f1 = true;
+            }*@
+
+           
+
+            <th>@Localizer["Field3"]</th>
+        </tr>
+       
+        @foreach (var item in Model)
+        {
+            list.Clear();
+    <tr>
+        <td>@item.Id</td>
+        <td>@item.Name</td>
+
+
+        @foreach (var tag in ViewBag.Tags)
+                {
+                    if (item.Id == tag.ItemId)
+                    {
+                        list.Add(tag.TagName);
+                    }
+                }
+        <td>
+            @foreach (var t in list)
+                    {
+
+            @t
+            <br />
+
+                    }
+        </td>
+        @*@if(f1){
+        <td>@item.FInt1</td>
+            }*@
+        
+        @*<td>@item.FInt1</td>*@
+        <td>
+            <form asp-action="Delete" asp-controller="Item" asp-route-id="@item.Id" method="post">
+                @if (ViewBag.Flag == true)
+                        {
+                <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@item.Id">@Localizer["B1"]</a>
+                <button type="submit" class="btn btn-sm btn-danger">
+                    @Localizer["B2"]
+                </button>
+                        }
+                <a class="btn btn-sm btn-info" href="~/Item/Open?id=@item.Id">@Localizer["B3"]</a>
+
+            </form>
+        </td>
+    </tr>
+        }
+    </table>
+    <script src="~/js//userList.js"></script>
+
+
+
+
+
+    <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModal2" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="#exampleModalLabel">@Localizer["H1"]</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="height:300px;">
+                    <div>
+                        <form asp-action="AddField" asp-controller="Item">
+                            <label class="control-label">@Localizer["T1"]</label>
+                            <select asp-items="Html.GetEnumSelectList<FinalProject.Models.Field.CustomField>()" class="form-control" name="typeField"> </select>
+                            <label class="control-label">@Localizer["F1"]</label>
+                            <input type="text" placeholder="" class="form-control" name="nameField" />
+                            <label class="control-label">Значение</label>                           
+                            <input type="text" placeholder="" class="form-control" name="valueField" />
+                            <button class="btn btn-secondary" data-dismiss="modal" style="margin-top:25px; float:right;">@Localizer["C1"]</button>
+
+                            <button type="submit" class="btn btn-primary"  style="margin-top:25px; float:right; margin-right:5px;">@Localizer["Bt"]</button>
+                        </form>
+                    </div>
+                </div>
+                <!--<div class="modal-footer">-->
+                    @*<button class="btn btn-secondary" data-dismiss="modal">@Localizer["C1"]</button>
+                    <form asp-action="AddField" asp-controller="Item">
+                        <button type="submit" class="btn btn-primary">@Localizer["Bt"]</button>
+                    </form>*@
+
+                <!--</div>-->
+
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

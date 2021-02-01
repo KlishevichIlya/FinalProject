@@ -1,0 +1,38 @@
+﻿@model FinalProject.Models.Item
+@{
+    ViewBag.Title = "Добавление элемента";
+   
+}
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <script src="https://unpkg.com/@@yaireo/tagify"></script>
+    <script src="https://unpkg.com/@@yaireo/tagify@3.1.0/dist/tagify.polyfills.min.js"></script>
+    <link href="https://unpkg.com/@@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="~/css/createItem.css" />
+</head>
+<body>
+    <h1>Добавление нового элемента</h1>
+    <form asp-action="AddItem" asp-controller="Item" id="form"  >
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Name" class="control-label">Имя</label>
+            <input type="text" asp-for="Name" class="form-control" />
+        </div>
+        <div class="form-group" id="container">
+            <label asp-for="Tags" class="control-label">Теги</label>
+            <input name='tagify'>
+        </div>       
+        <div class="form-group">
+            <input name="id" value="@ViewBag.Id" hidden/>
+            <input type="submit" value="Добавить" class="btn btn-outline-secondary" id="sendButton" />
+        </div>
+    </form>
+   
+    <script src="~/js/createItem.js"></script>
+</body>
+</html>

@@ -1,4 +1,6 @@
-﻿.container {
+﻿
+
+.container {
     max-width: 960px;
 }
 
@@ -10,6 +12,7 @@
     flex-direction:row;
     flex-wrap:wrap;
 }
-    .myContent .col {
-        flex: 0 0 33.333333%;
-    }
+.myContent .col {
+    flex: 0 0 33.3%;
+}
+

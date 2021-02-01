@@ -1,0 +1,145 @@
+﻿@model FinalProject.Models.Item
+@{
+    ViewBag.Title = "Добавление элемента";
+
+}
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <script src="https://unpkg.com/@@yaireo/tagify"></script>
+    <script src="https://unpkg.com/@@yaireo/tagify@3.1.0/dist/tagify.polyfills.min.js"></script>
+    <link href="https://unpkg.com/@@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="~/css/createItem.css" />
+</head>
+<body>
+    <h1 class="text-center">Изменение выбранного элемента</h1>
+    <form asp-action="Update" asp-controller="Item" id="form">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Name" class="control-label">Имя</label>
+            <input type="text" asp-for="Name" class="form-control" value="@Model.Name" />
+        </div>
+        <div class="form-group" id="container">
+            <label asp-for="Tags" class="control-label">Теги</label>
+            <input name='tagify'>
+
+            @*<tags class="tagify" tabindex="-1">
+
+                @foreach (var t in ViewBag.TagForItem)
+            {
+                <tag title="@t.TagName" contenteditable="false" spellcheck="false" tabindex="-1" class="tagify__tag " __isvalid="true" value="@t.TagName">
+                    <x title="" class="tagify__tag__removeBtn" role="button" aria-label="remove tag"></x>
+                    <div><span class="tagify__tag-text">@t.TagName</span></div>
+                </tag>
+
+            }
+                <span contenteditable="" data-placeholder="​" aria-placeholder="" class="tagify__input" role="textbox" aria-autocomplete="both" aria-multiline="false"></span>*@
+                
+            @*</tags>*@
+
+        </div>
+
+        <h3>Дополнительные поля элемента</h3>
+
+
+        @if(ViewBag.FInt1_Name != null)
+        {
+        <label class="control-label">@ViewBag.FInt1_Name</label>
+        <input type="text" name="FI1" class="form-control" value="@ViewBag.FInt1" />
+        }
+        @if(ViewBag.FInt2_Name != null)
+        {
+        <label class="control-label">@ViewBag.FInt2_Name</label>
+        <input type="text" name="FI2" class="form-control" value="@ViewBag.FInt2" />
+        }
+        @if(ViewBag.FInt3_Name != null)
+        {
+        <label class="control-label">@ViewBag.FInt3_Name</label>
+        <input type="text" name="FI3" class="form-control" value="@ViewBag.FInt3" />
+        }
+
+        @if(ViewBag.FStr1_Name != null)
+        {
+        <label class="control-label">@ViewBag.FStr1_Name</label>
+        <input type="text" name="S1" class="form-control" value="@ViewBag.FStr1" />
+        }
+        @if(ViewBag.FStr2_Name != null)
+        {
+        <label class="control-label">@ViewBag.FStr2_Name</label>
+        <input type="text" name="S2" class="form-control" value="@ViewBag.FStr2" />
+        }
+        @if(ViewBag.FStr3_Name != null)
+        {
+        <label class="control-label">@ViewBag.FStr3_Name</label>
+        <input type="text" name="S3" class="form-control" value="@ViewBag.FStr3" />
+        }
+
+        @if(ViewBag.FText1_Name != null)
+        {
+        <label class="control-label">@ViewBag.FText1_Name</label>
+        <input type="text" name="T1" class="form-control" value="@ViewBag.FText1" />
+        }
+        @if(ViewBag.FText2_Name != null)
+        {
+        <label class="control-label">@ViewBag.FText2_Name</label>
+        <input type="text" name="T2" class="form-control" value="@ViewBag.FText2" />
+        }
+        @if(ViewBag.FText3_Name != null)
+        {
+        <label class="control-label">@ViewBag.FText3_Name</label>
+        <input type="text" name="T3" class="form-control" value="@ViewBag.FText3" />
+        }
+
+
+        @if(ViewBag.FDate1_Name != null)
+        {
+        <label class="control-label">@ViewBag.FDate1_Name</label>
+        <input type="datetime-local" name="D1" class="form-control" value="@ViewBag.FDate1" />
+        }
+
+        @if(ViewBag.FDate2_Name != null)
+        {
+        <label class="control-label">@ViewBag.FDate2_Name</label>
+        <input type="datetime-local" name="D2" class="form-control" value="@ViewBag.FDate2" />
+        }
+
+        @if(ViewBag.FDate3_Name != null)
+        {
+        <label class="control-label">@ViewBag.FDate3_Name</label>
+        <input type="datetime-local" name="D3" class="form-control" value="@ViewBag.FDate3" />
+        }
+
+        @if(ViewBag.FChBox1_Name != null)
+        {
+        <label class="control-label">@ViewBag.FChBox1_Name</label>
+        @Html.EditorFor(x => x.FChBox1)
+
+        }
+        <br />
+        @if(ViewBag.FChBox2_Name != null)
+        {
+        <label class="control-label">@ViewBag.FChBox2_Name</label>
+        @Html.EditorFor(x => x.FChBox2)
+        }
+        <br />
+        @if(ViewBag.FChBox3_Name != null)
+        {
+        <label class="control-label">@ViewBag.FChBox3_Name</label>
+        @Html.EditorFor(x => x.FChBox3)
+        }
+
+
+
+        <div class="form-group">
+            <input name="id" value="@ViewBag.Id" hidden />
+            <input type="submit" value="Изменить" class="btn btn-outline-secondary" id="sendButton" style="margin-top:25px;" />
+        </div>
+    </form>
+
+    <script src="~/js/createItem.js"></script>
+</body>
+</html>

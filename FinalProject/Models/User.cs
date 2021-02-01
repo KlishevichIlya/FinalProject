@@ -12,5 +12,10 @@ namespace FinalProject.Models
         public string SecondName { get; set; }
 
         public int Year { get; set; }
+        public List<Collection> Collections { get; set; }
+
+        public Like Like { get; set; }
+        
+        public List<Comment> Comments { get; set; }
     }
 }
