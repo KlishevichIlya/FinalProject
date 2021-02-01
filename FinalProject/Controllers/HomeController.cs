@@ -35,6 +35,11 @@ namespace FinalProject.Controllers
 
         public async Task<IActionResult> Lenta()
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return Redirect("~/Identity/Account/Login");
+            }
+            
             var allCollection = await _db.Collections.ToListAsync();
             return View(allCollection);
         }
@@ -141,6 +146,7 @@ namespace FinalProject.Controllers
             var item = await _db.Collections.FindAsync(id);
             if(item != null)
             {
+                
                 _db.Collections.Remove(item);
                 //await _db.SaveChangesAsync();
                 _db.SaveChanges();

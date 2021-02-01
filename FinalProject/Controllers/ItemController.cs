@@ -228,10 +228,14 @@ namespace FinalProject.Controllers
             curItem.FChBox2 = FChBox2;
             curItem.FChBox3 = FChBox3;
             var oldTags = await _db.Tags.Where(x => x.ItemId == curItem.Id).ToListAsync();
-            foreach (var r in oldTags)
+            if(tags.Count > 0)
             {
-                _db.Tags.Remove(r);
+                foreach (var r in oldTags)
+                {
+                    _db.Tags.Remove(r);
+                }
             }
+            
 
             for (int i = 0; i < tags.Count; i++)
             {
@@ -245,111 +249,116 @@ namespace FinalProject.Controllers
 
         public async Task<IActionResult> Open(string id)
         {
-            var currentUser = await _userManager.GetUserAsync(User);
-            //var currentIdItem = Request.Cookies["currentCollection"];
-
-            ViewBag.Id = id;
-            var item = await _db.Items.FindAsync(id);
-            if(item != null)
-            {
-                var tags = await _db.Tags.Where(x => x.ItemId == item.Id).ToListAsync();
-                var like = _db.Likes.FirstOrDefault(x => x.UserId == currentUser.Id);
-                var bitmask = item.BitMask;
-                for(int i = 0; i <= 14; i++)
+          
+                var currentUser = await _userManager.GetUserAsync(User);
+                var currentIdItem = Request.Cookies["currentCollection"];
+                Response.Cookies.Append("curIt", id);
+                var collection = await _db.Collections.FindAsync(currentIdItem);
+                if (collection != null)
+                    ViewBag.Desc = collection.description;
+                ViewBag.Id = id;
+                var item = await _db.Items.FindAsync(id);
+                if (item != null)
                 {
-                    if((bitmask & (1 << i)) != 0)
+                    var tags = await _db.Tags.Where(x => x.ItemId == item.Id).ToListAsync();
+                    var like = _db.Likes.FirstOrDefault(x => x.UserId == currentUser.Id);
+                    var bitmask = item.BitMask;
+                    for (int i = 0; i <= 14; i++)
                     {
-                        if(i == 0)
+                        if ((bitmask & (1 << i)) != 0)
                         {
-                            ViewBag.FInt1_Name = item.FInt1_Name;
-                            ViewBag.FInt1 = item.FInt1;
+                            if (i == 0)
+                            {
+                                ViewBag.FInt1_Name = item.FInt1_Name;
+                                ViewBag.FInt1 = item.FInt1;
+                            }
+                            if (i == 1)
+                            {
+                                ViewBag.FInt2_Name = item.FInt2_Name;
+                                ViewBag.FInt2 = item.FInt2;
+                            }
+                            if (i == 2)
+                            {
+                                ViewBag.FInt3_Name = item.FInt3_Name;
+                                ViewBag.FInt3 = item.FInt3;
+                            }
+                            ////////
+                            if (i == 3)
+                            {
+                                ViewBag.FStr1_Name = item.FStr1_Name;
+                                ViewBag.FStr1 = item.FStr1;
+                            }
+                            if (i == 4)
+                            {
+                                ViewBag.FStr2_Name = item.FInt2_Name;
+                                ViewBag.FStr2 = item.FStr2;
+                            }
+                            if (i == 5)
+                            {
+                                ViewBag.FStr3_Name = item.FInt2_Name;
+                                ViewBag.FStr3 = item.FStr3;
+                            }
+                            //////////
+                            if (i == 6)
+                            {
+                                ViewBag.FText1_Name = item.FText1_Name;
+                                ViewBag.FText1 = item.FText1;
+                            }
+                            if (i == 7)
+                            {
+                                ViewBag.FText2_Name = item.FText2_Name;
+                                ViewBag.FText2 = item.FText2;
+                            }
+                            if (i == 8)
+                            {
+                                ViewBag.FText3_Name = item.FText3_Name;
+                                ViewBag.FText3 = item.FText3;
+                            }
+                            //////////
+                            if (i == 9)
+                            {
+                                ViewBag.FDate1_Name = item.FDate1_Name;
+                                ViewBag.FDate1 = item.FDate1;
+                            }
+                            if (i == 10)
+                            {
+                                ViewBag.FDate2_Name = item.FDate2_Name;
+                                ViewBag.FDate2 = item.FDate2;
+                            }
+                            if (i == 11)
+                            {
+                                ViewBag.FDate3_Name = item.FDate3_Name;
+                                ViewBag.FDate3 = item.FDate3;
+                            }
+                            ////////////
+                            if (i == 12)
+                            {
+                                ViewBag.FChBox1_Name = item.FChBox1_Name;
+                                ViewBag.FChBox1 = item.FChBox1;
+                            }
+                            if (i == 13)
+                            {
+                                ViewBag.FChBox2_Name = item.FChBox2_Name;
+                                ViewBag.FChBox2 = item.FChBox2;
+                            }
+                            if (i == 14)
+                            {
+                                ViewBag.FChBox3_Name = item.FChBox3_Name;
+                                ViewBag.FChBox3 = item.FChBox3;
+                            }
+                            /////////////
                         }
-                        if (i == 1)
-                        {
-                            ViewBag.FInt2_Name = item.FInt2_Name;
-                            ViewBag.FInt2 = item.FInt2;
-                        }
-                        if (i == 2)
-                        {
-                            ViewBag.FInt3_Name = item.FInt3_Name;
-                            ViewBag.FInt3 = item.FInt3;
-                        }
-                        ////////
-                        if (i == 3)
-                        {
-                            ViewBag.FStr1_Name = item.FStr1_Name;
-                            ViewBag.FStr1 = item.FStr1;
-                        }
-                        if (i == 4)
-                        {
-                            ViewBag.FStr2_Name = item.FInt2_Name;
-                            ViewBag.FStr2 = item.FStr2;
-                        }
-                        if (i == 5)
-                        {
-                            ViewBag.FStr3_Name = item.FInt2_Name;
-                            ViewBag.FStr3 = item.FStr3;
-                        }
-                        //////////
-                        if (i == 6)
-                        {
-                            ViewBag.FText1_Name = item.FText1_Name;
-                            ViewBag.FText1 = item.FText1;
-                        }
-                        if (i == 7)
-                        {
-                            ViewBag.FText2_Name = item.FText2_Name;
-                            ViewBag.FText2 = item.FText2;
-                        }
-                        if (i == 8)
-                        {
-                            ViewBag.FText3_Name = item.FText3_Name;
-                            ViewBag.FText3 = item.FText3;
-                        }
-                        //////////
-                        if (i == 9)
-                        {
-                            ViewBag.FDate1_Name = item.FDate1_Name;
-                            ViewBag.FDate1 = item.FDate1;
-                        }
-                        if (i == 10)
-                        {
-                            ViewBag.FDate2_Name = item.FDate2_Name;
-                            ViewBag.FDate2 = item.FDate2;
-                        }
-                        if (i == 11)
-                        {
-                            ViewBag.FDate3_Name = item.FDate3_Name;
-                            ViewBag.FDate3 = item.FDate3;
-                        }
-                        ////////////
-                        if (i == 12)
-                        {
-                            ViewBag.FChBox1_Name = item.FChBox1_Name;
-                            ViewBag.FChBox1 = item.FChBox1;
-                        }
-                        if (i == 13)
-                        {
-                            ViewBag.FChBox2_Name = item.FChBox2_Name;
-                            ViewBag.FChBox2 = item.FChBox2;
-                        }
-                        if (i == 14)
-                        {
-                            ViewBag.FChBox3_Name = item.FChBox3_Name;
-                            ViewBag.FChBox3 = item.FChBox3;
-                        }
-                        /////////////
                     }
+                    ViewBag.TagForOpen = tags;
+
+                    // ViewBag.isLike = like.isLike;
+                    if (like == null || like.isLike == false || like.ItemId != id)
+                        ViewBag.isLike = false;
+                    else
+                        ViewBag.isLike = true;
+                    return View(item);
                 }
-                ViewBag.TagForOpen = tags;
-                
-                // ViewBag.isLike = like.isLike;
-                if (like == null || like.isLike == false || like.ItemId != id)
-                    ViewBag.isLike = false;
-                else
-                    ViewBag.isLike = true;
-                return View(item);
-            }
+           
             return NotFound();
         }
       
@@ -577,7 +586,12 @@ namespace FinalProject.Controllers
             return RedirectToAction("Index", "Item", new { id = currentCollection });
         }
 
-
+        //[HttpPost]
+        //public async Task<IActionResult> Search(string search)
+        //{
+        //    var results = _db.Items.Where(x => EF.Functions.Contains(x.Name, search)).ToList();
+        //    return View();
+        //}
         //public async void Comment(string id, string message)
         //{
         //   var currentUser = await _userManager.GetUserAsync(User);

@@ -20,7 +20,7 @@
 
 <body>
     <h1 class="text-center">@Localizer["Header"]</h1>
-
+    @if(ViewBag.Flag == true) {
     <a data-toggle="modal" data-target="#exampleModal3" class="btn btn-info btn-sm" id="addButton">
         @Localizer["AddField"]
     </a>
@@ -29,7 +29,7 @@
             @Localizer["AddItem"]
         </a>        
     </div>
-
+    }
 
     <form method="get" asp-route-id="@ViewBag.Id" id="filterForm">
         <div class="form-inline">
@@ -132,11 +132,11 @@
                             <select asp-items="Html.GetEnumSelectList<FinalProject.Models.Field.CustomField>()" class="form-control" name="typeField"> </select>
                             <label class="control-label">@Localizer["F1"]</label>
                             <input type="text" placeholder="" class="form-control" name="nameField" />
-                            <label class="control-label">Значение</label>
+                            <label class="control-label">Значение</label>                           
                             <input type="text" placeholder="" class="form-control" name="valueField" />
-                            <button class="btn btn-secondary" data-dismiss="modal">@Localizer["C1"]</button>
+                            <button class="btn btn-secondary" data-dismiss="modal" style="margin-top:25px; float:right;">@Localizer["C1"]</button>
 
-                            <button type="submit" class="btn btn-primary">@Localizer["Bt"]</button>
+                            <button type="submit" class="btn btn-primary"  style="margin-top:25px; float:right; margin-right:5px;">@Localizer["Bt"]</button>
                         </form>
                     </div>
                 </div>

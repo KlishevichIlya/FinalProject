@@ -26,7 +26,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - FinalProject</title>
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/navbars/">
-
+    <script src="https://kit.fontawesome.com/7e38d4cf32.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     @{
         var cookieValue = Context.Request.Cookies["theme"];
@@ -50,7 +50,7 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
+            <div class="container" style="margin-left:unset;margin-right:unset;max-width:none;">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">FinalProject</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -70,7 +70,7 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">@Localizer["AdminButton"]</a>
                             </li>
-                           
+
                         }
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@Localizer["SettingButton"]</a>
@@ -82,8 +82,9 @@
 
 
                         </li>
-                    </ul>
 
+                    </ul>
+                    
                 </div>
             </div>
         </nav>
@@ -98,8 +99,10 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body" style="height:150px;">
-                    <div class="center">
+                <div class="modal-body" style="height:70px;">
+                    
+                    <div class="text-center">
+                        <i class="fa fa-sun-o" aria-hidden="true" style="font-size:2em;"></i>
                         @if (Context.Request.Cookies["theme"] == "false")
                         {
                             <input id="selectTheme" type="checkbox" name="" />
@@ -112,7 +115,9 @@
                         {
                             <input id="selectTheme" type="checkbox" name="" />
                         }
+                        <i class="fa fa-moon-o" aria-hidden="true" style="font-size:2em;"></i>
                     </div>
+                    
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" data-dismiss="modal">@Localizer["CloseButton"]</button>
@@ -168,7 +173,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2021 - FinalProject - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2021 - FinalProject - <a href="tg://resolve?domain=KlishevichIlya">Telegram</a>
         </div>
     </footer>
 

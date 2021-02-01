@@ -13,6 +13,9 @@ namespace FinalProject.Models
         public string Nick { get; set; }
         public Item Item { get; set; }
         public string ItemId { get; set; }
+
+        public User User { get; set; }
+        public string UserId { get; set; }
        
     }
 }

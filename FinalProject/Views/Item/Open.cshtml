@@ -1,7 +1,7 @@
 ﻿@model FinalProject.Models.Item
 @{
     ViewBag.Title = "Добавление элемента";
-
+    
 }
 
 <html>
@@ -44,96 +44,121 @@
     </tag>
     }
     <span contenteditable="" data-placeholder="​" aria-placeholder="" class="tagify__input" role="textbox" aria-autocomplete="both" aria-multiline="false"></span>
-
-    <h2>Дополнительные поля элемента:</h2>
-    @if(ViewBag.FInt1_Name != null)
-            {
-    <h4>@ViewBag.FInt1_Name</h4>
-    <h4>@ViewBag.FInt1</h4>
-            }
-    @if(ViewBag.FInt2_Name != null)
-            {
-    <h4>@ViewBag.FInt2_Name</h4>
-    <h4>@ViewBag.FInt2</h4>
-            }
-    @if(ViewBag.FInt3_Name != null)
-            {
-    <h4>@ViewBag.FInt3_Name</h4>
-    <h4>@ViewBag.FInt3</h4>
-            }
-
-    @if(ViewBag.FStr1_Name != null)
-            {
-    <h4>@ViewBag.FStr1_Name</h4>
-    <h4>@ViewBag.FStr1</h4>
-            }
-    @if(ViewBag.FStr2_Name != null)
-            {
-    <h4>@ViewBag.FStr2_Name</h4>
-    <h4>@ViewBag.FStr2</h4>
-            }
-    @if(ViewBag.FStr3_Name != null)
-            {
-    <h4>@ViewBag.FStr3_Name</h4>
-    <h4>@ViewBag.FStr3</h4>
-            }
-
-
-
-    @if(ViewBag.FText1_Name != null)
-            {
-    <h4>@ViewBag.FText1_Name</h4>
-    <h4>@ViewBag.FText1</h4>
-            }
-    @if(ViewBag.FText2_Name != null)
-            {
-    <h4>@ViewBag.FText2_Name</h4>
-    <h4>@ViewBag.FText2</h4>
-            }
-    @if(ViewBag.FText3_Name != null)
-            {
-    <h4>@ViewBag.FText3_Name</h4>
-    <h4>@ViewBag.FText3</h4>
-            }
-
-
-    @if(ViewBag.FDate1_Name != null)
-            {
-    <h4>@ViewBag.FDate1_Name</h4>
-    <h4>@ViewBag.FDate1</h4>
-            }
-    @if(ViewBag.FDate2_Name != null)
-            {
-    <h4>@ViewBag.FDate2_Name</h4>
-    <h4>@ViewBag.FDate2</h4>
-            }
-    @if(ViewBag.FDate3_Name != null)
-            {
-    <h4>@ViewBag.FDate3_Name</h4>
-    <h4>@ViewBag.FDate3</h4>
-            }
-
-
-
-
-    @if(ViewBag.FChBox1_Name != null)
-            {
-    <h4>@ViewBag.FChBox1_Name</h4>
-    <h4>@ViewBag.FChBox1</h4>
-            }
-    @if(ViewBag.FChBox2_Name != null)
-            {
-    <h4>@ViewBag.FChBox2_Name</h4>
-    <h4>@ViewBag.FChBox2</h4>
-            }
-    @if(ViewBag.FChBox3_Name != null)
-            {
-    <h4>@ViewBag.FChBox3_Name</h4>
-    <h4>@ViewBag.FChBox3</h4>
-            }
-
+    <br />
 
     <hr />
+    <div class="custom-container" style="width:80%;">
+        <h2 class="text-center">Описание элемента:</h2>
+        <span id="desc" style="margin-left:25px;">@ViewBag.Desc</span>
+    </div>
+    <hr />
+
+    <div class="custom-container" style="width:80%;">
+        <h2 class="text-center">Дополнительные поля элемента:</h2>
+        @if(ViewBag.FInt1_Name != null)
+            {
+        <b>@ViewBag.FInt1_Name:</b>
+        @ViewBag.FInt1
+        <br />
+            }
+        @if(ViewBag.FInt2_Name != null)
+            {
+        <b>@ViewBag.FInt2_Name: </b>
+        @ViewBag.FInt2
+        <br />
+            }
+        @if(ViewBag.FInt3_Name != null)
+            {
+        <b>@ViewBag.FInt3_Name: </b>
+        @ViewBag.FInt3
+        <br />
+            }
+
+        @if(ViewBag.FStr1_Name != null)
+            {
+        <b>@ViewBag.FStr1_Name: </b>
+        @ViewBag.FStr1
+        <br />
+            }
+        @if(ViewBag.FStr2_Name != null)
+            {
+        <b>@ViewBag.FStr2_Name: </b>
+        @ViewBag.FStr2
+        <br />
+            }
+        @if(ViewBag.FStr3_Name != null)
+            {
+        <b>@ViewBag.FStr3_Name: </b>
+        @ViewBag.FStr3
+        <br />
+            }
+
+
+
+        @if(ViewBag.FText1_Name != null)
+            {
+        <b>@ViewBag.FText1_Name: </b>
+        @ViewBag.FText1
+        <br />
+            }
+        @if(ViewBag.FText2_Name != null)
+            {
+        <b>@ViewBag.FText2_Name: </b>
+        @ViewBag.FText2
+        <br />
+            }
+        @if(ViewBag.FText3_Name != null)
+            {
+        <b>@ViewBag.FText3_Name: </b>
+        @ViewBag.FText3
+        <br />
+            }
+
+
+        @if(ViewBag.FDate1_Name != null)
+            {
+        <b>@ViewBag.FDate1_Name: </b>
+        @ViewBag.FDate1
+        <br />
+            }
+        @if(ViewBag.FDate2_Name != null)
+            {
+        <b>@ViewBag.FDate2_Name: </b>
+        @ViewBag.FDate2
+        <br />
+            }
+        @if(ViewBag.FDate3_Name != null)
+            {
+        <b>@ViewBag.FDate3_Name: </b>
+        @ViewBag.FDate3
+        <br />
+            }
+
+
+
+
+        @if(ViewBag.FChBox1_Name != null)
+            {
+        <b>@ViewBag.FChBox1_Name: </b>
+        @ViewBag.FChBox1
+        <br />
+            }
+        @if(ViewBag.FChBox2_Name != null)
+            {
+        <b>@ViewBag.FChBox2_Name: </b>
+        @ViewBag.FChBox2
+        <br />
+            }
+        @if(ViewBag.FChBox3_Name != null)
+            {
+        <b>@ViewBag.FChBox3_Name: </b>
+        @ViewBag.FChBox3
+        <br />
+            }
+    </div>
+
+    <hr />
+  
     <div class="custom-container text-center" style="padding-bottom: 50px;">
         <h4 class="custom-text text-center">Комментарии пользователей</h4>
         <div class="input-group input-group-sm mb-3">
@@ -158,6 +183,7 @@
 
         </div>
     </div>
+    
     @*<div id="oldcommets"></div>*@
     <script src="~/js/signalr/dist/browser/signalr.min.js"></script>
     <script src="~/js/open.js"></script>

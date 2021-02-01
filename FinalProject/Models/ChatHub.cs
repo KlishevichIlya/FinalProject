@@ -26,10 +26,18 @@ namespace FinalProject.Models
 
         [Authorize]
         public async Task Send(string nick, string message,string id)
-        {           
-            
-            await this.Clients.All.SendAsync("Send", message, nick);
-            Comment comment = new Comment() { Text = message, ItemId = id, Nick = nick };
+        {
+            //var allCom = await _db.Comments.Where(x => x.ItemId == id).ToListAsync();
+            //HashSet<string> users = new HashSet<string>();
+            //foreach (var com in allCom)
+            //{
+            //    users.Add(com.UserId);
+            //}
+            //users.Add(Context.UserIdentifier);
+
+            //await this.Clients.All.SendAsync("Send", message, nick);
+            await this.Clients.Group(id).SendAsync("Send", message, nick);
+            Comment comment = new Comment() { Text = message, ItemId = id, Nick = nick, UserId = Context.UserIdentifier };
             _db.Comments.Add(comment);           
             await _db.SaveChangesAsync();
         }
@@ -37,9 +45,10 @@ namespace FinalProject.Models
 
         public override async Task OnConnectedAsync()
         {
-           
+            var itemId = Context.GetHttpContext().Request.Cookies["curIt"];
+            await Groups.AddToGroupAsync(Context.ConnectionId, itemId);
             var comment = await _db.Comments.ToListAsync();
-            await Clients.All.SendAsync("Notify", comment);
+            await Clients.Caller.SendAsync("Notify", comment);
             await base.OnConnectedAsync();
         }
     }

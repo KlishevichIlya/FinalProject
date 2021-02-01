@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinalProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210127113811_TestMigration")]
-    partial class TestMigration
+    [Migration("20210201090334_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -67,9 +67,14 @@ namespace FinalProject.Migrations
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ItemId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Comments");
                 });
@@ -177,11 +182,13 @@ namespace FinalProject.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CollectionId");
+
+                    b.HasIndex("Name");
 
                     b.ToTable("Items");
                 });
@@ -440,7 +447,8 @@ namespace FinalProject.Migrations
                 {
                     b.HasOne("FinalProject.Models.User", "User")
                         .WithMany("Collections")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("FinalProject.Models.Comment", b =>
@@ -448,13 +456,18 @@ namespace FinalProject.Migrations
                     b.HasOne("FinalProject.Models.Item", "Item")
                         .WithMany("Comments")
                         .HasForeignKey("ItemId");
+
+                    b.HasOne("FinalProject.Models.User", "User")
+                        .WithMany("Comments")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("FinalProject.Models.Item", b =>
                 {
                     b.HasOne("FinalProject.Models.Collection", "Collection")
                         .WithMany("Items")
-                        .HasForeignKey("CollectionId");
+                        .HasForeignKey("CollectionId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("FinalProject.Models.Like", b =>
@@ -472,7 +485,8 @@ namespace FinalProject.Migrations
                 {
                     b.HasOne("FinalProject.Models.Item", "Item")
                         .WithMany("Tags")
-                        .HasForeignKey("ItemId");
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

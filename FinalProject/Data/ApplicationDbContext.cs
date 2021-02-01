@@ -71,6 +71,14 @@ namespace FinalProject.Data
                 .HasForeignKey(x => x.ItemId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<Item>()
+                 .HasMany(x => x.Like)
+                 .WithOne(x => x.Item)
+                 .HasForeignKey(x => x.ItemId)
+                 .OnDelete(DeleteBehavior.Cascade);
+
+
+
 
             modelBuilder.Entity<Collection>()
                 .HasMany(x => x.Items)
@@ -78,24 +86,32 @@ namespace FinalProject.Data
                 .HasForeignKey(x => x.CollectionId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<Like>()
-               .HasOne(x => x.Item)
-               .WithMany(x => x.Like)
-               .HasForeignKey(x => x.ItemId);
-              
+            //modelBuilder.Entity<Like>()
+            //   .HasOne(x => x.Item)
+            //   .WithMany(x => x.Like)
+            //   .HasForeignKey(x => x.ItemId)
+            //   .OnDelete(DeleteBehavior.Cascade);
+
+
+
 
             modelBuilder.Entity<Like>()
               .HasOne(x => x.User)
               .WithOne(x => x.Like);
-
+              
             modelBuilder.Entity<Comment>()
                 .HasOne(x => x.Item)
                 .WithMany(x => x.Comments)
                 .HasForeignKey(x => x.ItemId);
-                
+               
 
 
-           
+
+            modelBuilder.Entity<Comment>()
+                 .HasOne(x => x.User)
+                 .WithMany(x => x.Comments)
+                 .HasForeignKey(x => x.UserId);
+                 
 
 
         }
